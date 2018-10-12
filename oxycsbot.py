@@ -47,9 +47,15 @@ class ChatBot:
                 f'but got {tags.__class__.__name__}',
             ])
 
-    def go_to_state(self, state, *args, **kwargs):
-        assert state in self.STATES, f'state "{state}" is not defined'
-        response = getattr(self, f'on_enter_{state}')(*args, **kwargs)
+    def go_to_state(self, state):
+        assert state in self.STATES, f'ERROR: state "{state}" is not defined'
+        assert state != self.default_state, ' '.join([
+            'WARNING:',
+            f"do not call `go_to_state` on the default state {self.default_state};",
+            f'use `finish` instead',
+        ])
+        on_enter_method = getattr(self, f'on_enter_{state}')
+        response = on_enter_method()
         self.state = state
         return response
 
