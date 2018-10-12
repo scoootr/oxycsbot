@@ -161,8 +161,7 @@ class OxyCSBot(ChatBot):
         if 'yes' in tags:
             return self.finish('success')
         else:
-            response = f"{self.faculty.capitalize()}'s office is in {self.get_office(self.faculty)}"
-            return self.finish(response)
+            return self.finish('location')
 
     def on_enter_unknown_faculty(self):
         return "Who's office hours are you looking for?"
@@ -183,6 +182,11 @@ class OxyCSBot(ChatBot):
                 self.faculty = faculty
                 return self.go_to_state('specific_faculty')
         return self.finish('fail')
+
+    def finish_location(self):
+        response = f"{self.faculty.capitalize()}'s office is in {self.get_office(self.faculty)}"
+        self.faculty = None
+        return response
 
     def finish_success(self):
         return 'Great, let me know if you need anything else!'
