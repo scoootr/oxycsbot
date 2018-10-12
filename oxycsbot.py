@@ -130,9 +130,6 @@ class OxyCSBot(ChatBot):
         super().__init__(default_state='waiting')
         self.professor = None
 
-    def default_response(self):
-        return "Sorry, I'm just a simple bot that understands a few things. You can ask me about office hours though!"
-
     def get_office_hours(self, professor):
         office_hours = {
             'celia': 'F 12-1:45pm; F 2:45-4:00pm',
@@ -164,7 +161,7 @@ class OxyCSBot(ChatBot):
         elif 'thanks' in tags:
             return self.finish('thanks')
         else:
-            return self.default_response()
+            return self.finish('confused')
 
     def on_enter_specific_faculty(self):
         response = '\n'.join([
@@ -201,6 +198,9 @@ class OxyCSBot(ChatBot):
                 self.professor = professor
                 return self.go_to_state('specific_faculty')
         return self.finish('fail')
+
+    def finish_confused(self):
+        return "Sorry, I'm just a simple bot that understands a few things. You can ask me about office hours though!"
 
     def finish_location(self):
         return f"{self.professor.capitalize()}'s office is in {self.get_office(self.professor)}"
