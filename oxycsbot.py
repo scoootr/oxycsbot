@@ -103,6 +103,10 @@ class OxyCSBot(ChatBot):
         'leonard': 'kathryn',
         'justin': 'justin',
         'li': 'justin',
+        'jeff': 'jeff',
+        'miller': 'jeff',
+        'celia': 'celia',
+        'hsing-hau': 'hsing-hau',
 
         # generic
         'thanks': 'thanks',
@@ -114,34 +118,47 @@ class OxyCSBot(ChatBot):
         'nope': 'no',
     }
 
+    PROFESSORS = [
+        'celia',
+        'hsing-hau',
+        'jeff',
+        'justin',
+        'kathryn',
+    ]
 
     def __init__(self):
         super().__init__(default_state='waiting')
-        self.faculty = None
+        self.professor = None
 
     def default_response(self):
         return "Sorry, I'm just a simple bot that understands a few things. You can ask me about office hours though!"
 
-    def get_office_hours(self, faculty):
+    def get_office_hours(self, professor):
         office_hours = {
-            'kathryn': 'MWF 4-5pm',
+            'celia': 'F 12-1:45pm; F 2:45-4:00pm',
+            'hsing-hau': 'T 1-2:30pm; Th 10:30am-noon',
+            'jeff': 'unknown',
             'justin': 'T 1-2pm; W noon-1pm; F 3-4pm',
+            'kathryn': 'MWF 4-5pm',
         }
-        return office_hours[faculty]
+        return office_hours[professor]
 
-    def get_office(self, faculty):
-        office_hours = {
-            'kathryn': 'Swan B101',
+    def get_office(self, professor):
+        office = {
+            'celia': 'Swan 216',
+            'hsing-hau': 'Swan 302',
+            'jeff': 'Fowler 321',
             'justin': 'Swan B102',
+            'kathryn': 'Swan B101',
         }
-        return office_hours[faculty]
+        return office[professor]
 
     def respond_from_waiting(self, message, tags):
-        self.faculty = None
+        self.professor = None
         if 'office-hours' in tags:
-            for faculty in ['justin', 'kathryn']:
-                if faculty in tags:
-                    self.faculty = faculty
+            for professor in self.PROFESSORS:
+                if professor in tags:
+                    self.professor = professor
                     return self.go_to_state('specific_faculty')
             return self.go_to_state('unknown_faculty')
         elif 'thanks' in tags:
@@ -151,7 +168,7 @@ class OxyCSBot(ChatBot):
 
     def on_enter_specific_faculty(self):
         response = '\n'.join([
-            f"{self.faculty.capitalize()}'s office hours are {self.get_office_hours(self.faculty)}",
+            f"{self.professor.capitalize()}'s office hours are {self.get_office_hours(self.professor)}",
             'Do you know where their office is?',
         ])
         return response
@@ -166,24 +183,27 @@ class OxyCSBot(ChatBot):
         return "Who's office hours are you looking for?"
 
     def respond_from_unknown_faculty(self, message, tags):
-        for faculty in ['justin', 'kathryn']:
-            if faculty in tags:
-                self.faculty = faculty
+        for professor in self.PROFESSORS:
+            if professor in tags:
+                self.professor = professor
                 return self.go_to_state('specific_faculty')
         return self.go_to_state('unrecognized_faculty')
 
     def on_enter_unrecognized_faculty(self):
-        return "I'm not sure I understand - are you looking for Kathryn Leonard, or Justin Li?"
+        return ' '.join([
+            "I'm not sure I understand - are you looking for",
+            "Celia, Hsing-hau, Jeff, Justin, or Kathryn?",
+        ])
 
     def respond_from_unrecognized_faculty(self, message, tags):
-        for faculty in ['justin', 'kathryn']:
-            if faculty in tags:
-                self.faculty = faculty
+        for professor in self.PROFESSORS:
+            if professor in tags:
+                self.professor = professor
                 return self.go_to_state('specific_faculty')
         return self.finish('fail')
 
     def finish_location(self):
-        return f"{self.faculty.capitalize()}'s office is in {self.get_office(self.faculty)}"
+        return f"{self.professor.capitalize()}'s office is in {self.get_office(self.professor)}"
 
     def finish_success(self):
         return 'Great, let me know if you need anything else!'
