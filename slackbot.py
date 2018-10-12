@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-
 """An interface to Slack for chatbots."""
 
 from os import environ
@@ -22,6 +21,7 @@ def get_token():
     if 'TOKEN' in environ:
         return environ['TOKEN']
     raise NameError('"TOKEN" not defined in environment')
+
 
 def connect_to_slack():
     """Connect to Slack's real-time messaging interface.

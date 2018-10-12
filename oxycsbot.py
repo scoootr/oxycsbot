@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-
 """A tag-based chatbot framework."""
 
 import re
 from collections import Counter
+
 
 class ChatBot:
     """A tag-based chatbot framework
@@ -124,7 +124,6 @@ class ChatBot:
         except (EOFError, KeyboardInterrupt):
             print()
             exit()
-
 
     def respond(self, message):
         """Respond to a message.
