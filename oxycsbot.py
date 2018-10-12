@@ -8,16 +8,14 @@ class ChatBot:
     STATES = []
     TAGS = {}
 
-    def __init__(self, default_state=None):
-        if default_state is None:
-            self.default_state = self.STATES[0]
-        else:
-            if default_state not in self.STATES:
-                print(' '.join([
-                    f'WARNING:',
-                    f'The default state {default_state} is listed as a state.',
-                    f'Perhaps you mean {self.STATES[0]}?',
-                ]))
+    def __init__(self, default_state):
+        if default_state not in self.STATES:
+            print(' '.join([
+                f'WARNING:',
+                f'The default state {default_state} is listed as a state.',
+                f'Perhaps you mean {self.STATES[0]}?',
+            ]))
+        self.default_state = default_state
         self.state = self.default_state
         self.tags = {}
         self._check_states()
@@ -118,7 +116,7 @@ class OxyCSBot(ChatBot):
 
 
     def __init__(self):
-        super().__init__()
+        super().__init__(default_state='waiting')
         self.faculty = None
 
     def default_response(self):
