@@ -214,13 +214,6 @@ class OxyCSBot(ChatBot):
     def finish_thanks(self):
         return "You're welcome!"
 
-    def finish_cancel(self):
-        return "Okay, just let me know if you need anything else!"
-
-
-def main():
-    OxyCSBot().chat()
-
 
 if __name__ == '__main__':
-    main()
+    OxyCSBot().chat()
