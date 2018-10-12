@@ -73,8 +73,8 @@ class ChatBot:
 
 
     def respond(self, message):
-        tags = self._get_tags(message)
-        return getattr(self, f'respond_from_{self.state}')(message, tags)
+        respond_method = getattr(self, f'respond_from_{self.state}')
+        return respond_method(message, self._get_tags(message))
 
     def finish(self, manner):
         response = getattr(self, f'finish_{manner}')()
