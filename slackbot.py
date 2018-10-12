@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 
 from os import environ
-from datetime import datetime, timedelta
 from time import sleep
 
 from slackclient import SlackClient
@@ -10,15 +9,15 @@ from oxycsbot import OxyCSBot
 
 
 def run():
-    print('Running!')
-    start = datetime.now()
+    print('bot running')
     token = environ['TOKEN']
+    print(f'found Slack token {token}')
     slack_client = SlackClient(token)
     if not slack_client.rtm_connect(with_team_state=False):
-        print("Connection failed. Exception traceback printed above.")
+        print("connection failed; exception traceback is above.")
         return
     bot_id = slack_client.api_call('auth.test')['user_id']
-    print(bot_id)
+    print(f'assigned bot ID {bot_id}')
     # check for direct mention events
     bot = OxyCSBot() # FIXME
     while True:
@@ -38,9 +37,5 @@ def run():
         sleep(1)
 
 
-def main():
-    run()
-
-
 if __name__ == '__main__':
-    main()
+    run()
