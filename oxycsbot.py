@@ -122,7 +122,7 @@ class OxyCSBot(ChatBot):
         self.faculty = None
 
     def default_response(self):
-        return "I didn't catch that, can you say that a different way?"
+        return "Sorry, I'm just a simple bot that understands a few things. You can ask me about office hours though!"
 
     def get_office_hours(self, faculty):
         office_hours = {
