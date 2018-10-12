@@ -139,6 +139,7 @@ class OxyCSBot(ChatBot):
         return office_hours[faculty]
 
     def respond_from_waiting(self, message, tags):
+        self.faculty = None
         if 'office-hours' in tags:
             for faculty in ['justin', 'kathryn']:
                 if faculty in tags:
@@ -184,9 +185,7 @@ class OxyCSBot(ChatBot):
         return self.finish('fail')
 
     def finish_location(self):
-        response = f"{self.faculty.capitalize()}'s office is in {self.get_office(self.faculty)}"
-        self.faculty = None
-        return response
+        return f"{self.faculty.capitalize()}'s office is in {self.get_office(self.faculty)}"
 
     def finish_success(self):
         return 'Great, let me know if you need anything else!'
