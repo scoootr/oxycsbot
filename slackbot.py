@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 
-import socket
 from os import environ
 from datetime import datetime, timedelta
 from time import sleep
@@ -8,13 +7,6 @@ from time import sleep
 from slackclient import SlackClient
 
 from oxycsbot import OxyCSBot
-
-
-def bind_socket():
-    sock = socket.socket()
-    sock.bind(('', int(environ['PORT'])))
-    sock.listen(1)
-    conn, addr = sock.accept()
 
 
 def run():
@@ -47,7 +39,6 @@ def run():
 
 
 def main():
-    bind_socket()
     run()
 
 
