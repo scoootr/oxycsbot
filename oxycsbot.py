@@ -182,6 +182,7 @@ class OxyCSBot(ChatBot):
     TAGS = {
         # intent
         'office hours': 'office-hours',
+        'OH': 'office-hours',
         'help': 'office-hours',
 
         # professors
