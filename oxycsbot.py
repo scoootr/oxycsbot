@@ -317,7 +317,7 @@ class OxyCSBot(ChatBot):
     # "finish" functions
 
     def finish_confused(self):
-        return "Sorry, I'm just a simple bot that understands a few things. You can ask me about office hours though!"
+        return "Sorry, I'm just a simple bot that can't understand much. You can ask me about office hours though!"
 
     def finish_location(self):
         return f"{self.professor.capitalize()}'s office is in {self.get_office(self.professor)}"
