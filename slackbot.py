@@ -20,7 +20,7 @@ slack_events_adapter = SlackEventAdapter(environ['SLACK_SIGNING_SECRET'], '/slac
 slack_web_client = WebClient(token=environ['SLACK_BOT_TOKEN'])
 
 global_state = {
-    'bot_id': None,
+    'bot_id': slack_web_client.auth_test()['user_id'],
     'partners': {},
 }
 
@@ -54,7 +54,6 @@ def message(payload):
 
 def main():
     ssl_context = ssl_lib.create_default_context(cafile=certifi.where())
-    global_state['bot_id'] = slack_web_client.auth_test()['user_id']
     app.run()
 
 
