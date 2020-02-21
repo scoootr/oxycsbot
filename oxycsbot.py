@@ -3,6 +3,7 @@
 
 from chatbot import ChatBot
 
+
 class OxyCSBot(ChatBot):
     """A simple chatbot that directs students to office hours of CS professors."""
 
@@ -50,8 +51,8 @@ class OxyCSBot(ChatBot):
     def __init__(self):
         """Initialize the OxyCSBot.
 
-        The `professor` member variable stores whether the target
-        professor has been identified.
+        The `professor` member variable stores whether the target professor has
+        been identified.
         """
         super().__init__(default_state='waiting')
         self.professor = None
@@ -95,6 +96,15 @@ class OxyCSBot(ChatBot):
     # "waiting" state functions
 
     def respond_from_waiting(self, message, tags):
+        """Decide what state to go to from the "waiting" state.
+
+        Parameters:
+            message (str): The incoming message.
+            tags (Mapping[str, int]): A count of the tags that apply to the message.
+
+        Returns:
+            str: The message to send to the user.
+        """
         self.professor = None
         if 'office-hours' in tags:
             for professor in self.PROFESSORS:
@@ -110,6 +120,7 @@ class OxyCSBot(ChatBot):
     # "specific_faculty" state functions
 
     def on_enter_specific_faculty(self):
+        """Send a message when entering the "specific_faculty" state."""
         response = '\n'.join([
             f"{self.professor.capitalize()}'s office hours are {self.get_office_hours(self.professor)}",
             'Do you know where their office is?',
@@ -117,6 +128,15 @@ class OxyCSBot(ChatBot):
         return response
 
     def respond_from_specific_faculty(self, message, tags):
+        """Decide what state to go to from the "specific_faculty" state.
+
+        Parameters:
+            message (str): The incoming message.
+            tags (Mapping[str, int]): A count of the tags that apply to the message.
+
+        Returns:
+            str: The message to send to the user.
+        """
         if 'yes' in tags:
             return self.finish('success')
         else:
@@ -125,9 +145,19 @@ class OxyCSBot(ChatBot):
     # "unknown_faculty" state functions
 
     def on_enter_unknown_faculty(self):
+        """Send a message when entering the "unknown_faculty" state."""
         return "Who's office hours are you looking for?"
 
     def respond_from_unknown_faculty(self, message, tags):
+        """Decide what state to go to from the "unknown_faculty" state.
+
+        Parameters:
+            message (str): The incoming message.
+            tags (Mapping[str, int]): A count of the tags that apply to the message.
+
+        Returns:
+            str: The message to send to the user.
+        """
         for professor in self.PROFESSORS:
             if professor in tags:
                 self.professor = professor
@@ -137,12 +167,22 @@ class OxyCSBot(ChatBot):
     # "unrecognized_faculty" state functions
 
     def on_enter_unrecognized_faculty(self):
+        """Send a message when entering the "unrecognized_faculty" state."""
         return ' '.join([
             "I'm not sure I understand - are you looking for",
             "Celia, Hsing-hau, Jeff, Justin, or Kathryn?",
         ])
 
     def respond_from_unrecognized_faculty(self, message, tags):
+        """Decide what state to go to from the "unrecognized_faculty" state.
+
+        Parameters:
+            message (str): The incoming message.
+            tags (Mapping[str, int]): A count of the tags that apply to the message.
+
+        Returns:
+            str: The message to send to the user.
+        """
         for professor in self.PROFESSORS:
             if professor in tags:
                 self.professor = professor
@@ -152,18 +192,23 @@ class OxyCSBot(ChatBot):
     # "finish" functions
 
     def finish_confused(self):
+        """Send a message and go to the default state."""
         return "Sorry, I'm just a simple bot that can't understand much. You can ask me about office hours though!"
 
     def finish_location(self):
+        """Send a message and go to the default state."""
         return f"{self.professor.capitalize()}'s office is in {self.get_office(self.professor)}"
 
     def finish_success(self):
+        """Send a message and go to the default state."""
         return 'Great, let me know if you need anything else!'
 
     def finish_fail(self):
+        """Send a message and go to the default state."""
         return "I've tried my best but I still don't understand. Maybe try asking other students?"
 
     def finish_thanks(self):
+        """Send a message and go to the default state."""
         return "You're welcome!"
 
 
