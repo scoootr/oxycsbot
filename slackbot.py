@@ -1,88 +1,62 @@
 #!/usr/bin/env python3
 """An interface to Slack for chatbots."""
 
+import ssl as ssl_lib
 from os import environ
 from time import sleep
 
-from slackclient import SlackClient
+import certifi
+from flask import Flask
+from slack import WebClient
+from slackeventsapi import SlackEventAdapter
 
-from oxycsbot import OxyCSBot # FIXME
+from oxycsbot import OxyCSBot # FIXME replace with your chatbot class
 
+# initialize the Flask app
+app = Flask(__name__)
 
-def get_token():
-    """Read the Slack API token from the environment.
+# initialize the Slack objects
+slack_events_adapter = SlackEventAdapter(environ['SLACK_SIGNING_SECRET'], '/slack/events', app)
+slack_web_client = WebClient(token=environ['SLACK_BOT_TOKEN'])
 
-    Returns:
-        str: The Slack API token.
-
-    Raises:
-        NameError: If the TOKEN environment variable is not defined.
-    """
-    if 'TOKEN' in environ:
-        return environ['TOKEN']
-    raise NameError('"TOKEN" not defined in environment')
-
-
-def connect_to_slack():
-    """Connect to Slack's real-time messaging interface.
-
-    Returns:
-        SlackClient: A Slack API object.
-        str: The ID of this client.
-
-    Raises:
-        ConnectionError: If the connection to Slack fails.
-    """
-    slack_client = SlackClient(get_token())
-    if not slack_client.rtm_connect(with_team_state=False):
-        raise ConnectionError('failed to connect to Slack RTM interface')
-    bot_id = slack_client.api_call('auth.test')['user_id']
-    return slack_client, bot_id
+global_state = {
+    'bot_id': None,
+    'partners': {},
+}
 
 
-def get_at_message(event, bot_id):
-    """Check if a Slack event is an @-message to the bot.
+@slack_events_adapter.on('message')
+def message(payload):
+    """Pass messages onto a per user, per channel chatbot instance."""
+    event = payload.get('event', {})
 
-    Arguments:
-        event (dict): Details of the Slack event.
-        bot_id (str): The ID of the Slack client.
+    bot_id = global_state['bot_id']
+    channel_id = event.get('channel')
+    user_id = event.get('user')
+    text = event.get('text')
 
-    Returns:
-        str: The message, if it is an @-message directed at the bot. Returns
-            None otherwise.
-    """
-    if event['type'] != 'message' or 'subtype' in event:
-        return None
-    if ' ' not in event['text']:
-        return None
-    user_id, message = event['text'].split(' ', maxsplit=1)
-    if user_id != ('<@' + bot_id + '>'):
-        return None
-    return message.strip()
+    if user_id == bot_id:
+        return
+    if not text:
+        return
+
+    key = (user_id, channel_id)
+    if key not in global_state['partners']:
+        global_state['partners'][key] = OxyCSBot() # FIXME replace with your chatbot class
+    chatbot = global_state['partners'][key]
+    response = chatbot.respond(text)
+
+    slack_web_client.chat_postMessage(
+        channel=channel_id,
+        text=response,
+    )
 
 
-def run(bot_class):
-    """Connect the chatbot to Slack.
-
-    After connecting to Slack, this function will loop forever checking for
-    messages from Slack. The current interface to Slack only lets through @-
-    messages, _not_ direct messages.
-
-    Arguments:
-        bot_class (class): The class of the chatbot that will respond.
-    """
-    slack, bot_id = connect_to_slack()
-    bot = bot_class()
-    while True:
-        for event in slack.rtm_read():
-            print(event)
-            message = get_at_message(event, bot_id)
-            if message:
-                channel = event['channel']
-                response = bot.respond(message)
-                slack.api_call('chat.postMessage', channel=channel, text=response)
-        sleep(1)
+def main():
+    ssl_context = ssl_lib.create_default_context(cafile=certifi.where())
+    global_state['bot_id'] = slack_web_client.auth_test()['user_id']
+    app.run()
 
 
 if __name__ == '__main__':
-    run(OxyCSBot) # FIXME
+    main()
