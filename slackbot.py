@@ -3,7 +3,7 @@
 
 import ssl
 from os import environ
-from time import sleep
+from types import SimpleNamespace
 
 import certifi
 from flask import Flask
@@ -19,10 +19,7 @@ app = Flask(__name__)
 slack_events_adapter = SlackEventAdapter(environ['SLACK_SIGNING_SECRET'], '/slack/events', app)
 slack_web_client = WebClient(token=environ['SLACK_BOT_TOKEN'])
 
-global_state = {
-    'bot_id': slack_web_client.auth_test()['user_id'],
-    'partners': {},
-}
+global_state = SimpleNamespace()
 
 
 @slack_events_adapter.on('message')
@@ -54,6 +51,8 @@ def message(payload):
 
 def main():
     ssl_context = ssl.create_default_context(cafile=certifi.where())
+    global_state.bot_id = slack_web_client.auth_test()['user_id']
+    global_state.partners = {}
     app.run()
 
 
