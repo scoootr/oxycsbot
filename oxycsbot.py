@@ -29,6 +29,8 @@ class OxyCSBot(ChatBot):
         'miller': 'jeff',
         'celia': 'celia',
         'hsing-hau': 'hsing-hau',
+        'umit': 'umit',
+        'yalcinalp': 'umit',
 
         # generic
         'thanks': 'thanks',
@@ -46,6 +48,7 @@ class OxyCSBot(ChatBot):
         'jeff',
         'justin',
         'kathryn',
+        'umit',
     ]
 
     def __init__(self):
@@ -67,11 +70,12 @@ class OxyCSBot(ChatBot):
             str: The office hours of that professor.
         """
         office_hours = {
-            'celia': 'F 12-1:45pm; F 2:45-4:00pm',
-            'hsing-hau': 'T 1-2:30pm; Th 10:30am-noon',
-            'jeff': 'unknown',
-            'justin': 'T 1-2pm; W noon-1pm; F 3-4pm',
-            'kathryn': 'MWF 4-5pm',
+            'celia': 'unknown',
+            'hsing-hau': 'MW 3:30-4:30pm; F 11:45am-12:45pm',
+            'jeff': 'W 4-5pm; Th 12:50-1:50pm; F 4-5pm',
+            'justin': 'T 3-4pm; W 2-3pm; F 4-5pm',
+            'kathryn': 'MF 4-5:30pm',
+            'umit': 'M 3-5pm; W 10am-noon, 3-5pm',
         }
         return office_hours[professor]
 
@@ -85,11 +89,12 @@ class OxyCSBot(ChatBot):
             str: The office of that professor.
         """
         office = {
-            'celia': 'Swan 216',
+            'celia': 'Swan 232',
             'hsing-hau': 'Swan 302',
             'jeff': 'Fowler 321',
             'justin': 'Swan B102',
             'kathryn': 'Swan B101',
+            'umit': 'Swan 226',
         }
         return office[professor]
 
@@ -170,7 +175,7 @@ class OxyCSBot(ChatBot):
         """Send a message when entering the "unrecognized_faculty" state."""
         return ' '.join([
             "I'm not sure I understand - are you looking for",
-            "Celia, Hsing-hau, Jeff, Justin, or Kathryn?",
+            "Celia, Hsing-hau, Jeff, Justin, Kathryn, or Umit?",
         ])
 
     def respond_from_unrecognized_faculty(self, message, tags):
