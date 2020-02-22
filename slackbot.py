@@ -32,9 +32,11 @@ def message(payload):
     user_id = event.get('user')
     text = event.get('text')
 
+    # ignore messages sent by the bot itself
     if user_id == bot_id:
         return
-    if not text:
+    # ignore messages that don't mention the bot
+    if f'<@{global_state.bot_id}>' not in text:
         return
 
     key = (user_id, channel_id)
