@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """An interface to Slack for chatbots."""
 
-import ssl as ssl_lib
+import ssl
 from os import environ
 from time import sleep
 
@@ -53,7 +53,7 @@ def message(payload):
 
 
 def main():
-    ssl_context = ssl_lib.create_default_context(cafile=certifi.where())
+    ssl_context = ssl.create_default_context(cafile=certifi.where())
     app.run()
 
 
