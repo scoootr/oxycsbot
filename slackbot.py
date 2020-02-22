@@ -27,7 +27,7 @@ def message(payload):
     """Pass messages onto a per user, per channel chatbot instance."""
     event = payload.get('event', {})
 
-    bot_id = global_state['bot_id']
+    bot_id = global_state.bot_id
     channel_id = event.get('channel')
     user_id = event.get('user')
     text = event.get('text')
@@ -40,9 +40,9 @@ def message(payload):
         return
 
     key = (user_id, channel_id)
-    if key not in global_state['partners']:
-        global_state['partners'][key] = OxyCSBot() # FIXME replace with your chatbot class
-    chatbot = global_state['partners'][key]
+    if key not in global_state.partners:
+        global_state.partners[key] = OxyCSBot() # FIXME replace with your chatbot class
+    chatbot = global_state.partners[key]
     response = chatbot.respond(text)
 
     slack_web_client.chat_postMessage(
