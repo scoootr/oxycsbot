@@ -106,11 +106,11 @@ Once the chatbot is in the channel, send another message mentioning them. If eve
 
 ## OxyCSBot Structure
 
-The starter code is available on GitHub as a [repository](https://github.com/justinnhli/oxycsbot) and as a [zip file](https://github.com/justinnhli/oxycsbot/archive/master.zip). The function-by-function documentation is in the source code, which I won't repeat here. Instead, let's look at an example chatbot, OxyCSBot, that can direct students to professor's office hours. First, a flow chart of how this bot should react:
+The example chatbot in [this repository](https://github.com/justinnhli/oxycsbot), OxyCSBot, gives directions to the office hours of Occidental College's CS faculty. The function-by-function documentation is in the source code, which I won't repeat here. The bot follows the following flow chart:
 
 ![A flow chart for OxyCSBot](images/oxycsbot.png)
 
-This flow chart already defines all the necessary states: the default `waiting` state, and `unknown_faculty`, `unrecognized_faculty`, and `specific_faculty` states. This means we need to write seven state functions (we don't need an `on_enter` function for the default `waiting` state), and several `finish` functions that would quit the flow:
+This flow chart already defines all the necessary states: the default `waiting` state, and the `unknown_faculty`, `unrecognized_faculty`, and `specific_faculty` states. This means we need to write seven state functions (we don't need an `on_enter` function for the default `waiting` state), and several `finish` functions that would quit the flow:
 
 * `respond_from_waiting`
 * `on_enter_specific_faculty`
