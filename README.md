@@ -104,6 +104,10 @@ Once the chatbot is in the channel, send another message mentioning them. If eve
 
 ![Hear from the chatbot](images/6-respond.png)
 
+Now that your chatbot is working, you can indicate that it's always ready to respond by making it appear online. You can toggle this in the App Home page in the Slack settings.
+
+![Toggle always online](images/6-always-online.png)
+
 ## OxyCSBot Structure
 
 The example chatbot in [this repository](https://github.com/justinnhli/oxycsbot), OxyCSBot, gives directions to the office hours of Occidental College's CS faculty. The function-by-function documentation is in the source code, which I won't repeat here. The bot follows the following flow chart:
