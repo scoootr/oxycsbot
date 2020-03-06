@@ -1,0 +1,20 @@
+from chatbot import Chatbot
+
+class Super_Chatbot:
+
+
+
+    STATES = [
+        'waiting',
+        'name',
+        'companyname',
+        'interest',
+    ]
+
+    TAGS = {
+        'resumé':'resume',
+        'resume':'resume',
+        'interviewing':'interview',
+        'interview':'interview'
+
+    }
