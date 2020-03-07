@@ -32,7 +32,7 @@ def message(payload):
     channel_id = event.get('channel')
     user_id = event.get('user')
     text = event.get('text')
-
+    print("hi")
     # ignore messages sent by the bot itself
     if user_id == bot_id:
         return
@@ -50,7 +50,6 @@ def message(payload):
         channel=channel_id,
         text=response,
     )
-    print("hey");
 
 def main():
     ssl_context = ssl.create_default_context(cafile=certifi.where())
@@ -60,4 +59,4 @@ def main():
 if __name__ == '__main__':
     main()
 
-    print("hey");
+    print("hey")
