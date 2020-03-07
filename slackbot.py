@@ -50,7 +50,7 @@ def message(payload):
         channel=channel_id,
         text=response,
     )
-
+    print("hey");
 
 def main():
     ssl_context = ssl.create_default_context(cafile=certifi.where())
@@ -59,3 +59,5 @@ def main():
 
 if __name__ == '__main__':
     main()
+
+    print("hey");
