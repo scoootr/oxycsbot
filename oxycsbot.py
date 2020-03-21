@@ -15,6 +15,8 @@ class OxyCSBot(ChatBot):
 
     TAGS = {
         # intent
+
+        'interview': 'interview',
         'office hours': 'office-hours',
         'OH': 'office-hours',
         'help': 'office-hours',
@@ -50,6 +52,9 @@ class OxyCSBot(ChatBot):
         'umit',
     ]
 
+
+
+
     def __init__(self):
         """Initialize the OxyCSBot.
         The `professor` member variable stores whether the target professor has
@@ -57,6 +62,14 @@ class OxyCSBot(ChatBot):
         """
         super().__init__(default_state='waiting')
         self.professor = None
+
+    def on_enter_introduction(self,tags,message):
+        if 'interview' in tags:
+
+
+            return "Hello."
+        else:
+            return "Bye."
 
     def get_office_hours(self, professor):
         """Find the office hours of a professor.
