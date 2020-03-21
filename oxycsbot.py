@@ -68,7 +68,7 @@ class OxyCSBot(ChatBot):
         self.professor = None
 
     def on_enter_hello(self):
-        return "Hello, I'm SIA, a student interview assistant.", self.finish('confused')
+        return "Hello, I'm SIA, a student interview assistant. \n" , self.finish('confused')
 
     def get_office_hours(self, professor):
         """Find the office hours of a professor.
