@@ -1,9 +1,9 @@
 """A simple chatbot that directs students to office hours of CS professors."""
 
 from chatbot import ChatBot
-#Courtney
 
-class  OxyCSBot(ChatBot):
+
+class OxyCSBot(ChatBot):
     """A simple chatbot that directs students to office hours of CS professors."""
 
     STATES = [
@@ -11,15 +11,10 @@ class  OxyCSBot(ChatBot):
         'specific_faculty',
         'unknown_faculty',
         'unrecognized_faculty',
-        'introduction',
-        'save_name',
-        'indentify_company',
-        'save_company'
     ]
 
     TAGS = {
-
-         # intent
+        # intent
         'office hours': 'office-hours',
         'OH': 'office-hours',
         'help': 'office-hours',
@@ -44,28 +39,6 @@ class  OxyCSBot(ChatBot):
         'yep': 'yes',
         'no': 'no',
         'nope': 'no',
-
-        'interview':'interview',
-        # company name
-        'kathryn': 'kathryn',
-        'leonard': 'kathryn',
-        'justin': 'justin',
-        'li': 'justin',
-        'jeff': 'jeff',
-        'miller': 'jeff',
-        'celia': 'celia',
-        'hsing-hau': 'hsing-hau',
-        'umit': 'umit',
-        'yalcinalp': 'umit',
-
-        # job description
-        'thanks': 'thanks',
-        'okay': 'success',
-        'bye': 'success',
-        'yes': 'yes',
-        'yep': 'yes',
-        'no': 'no',
-        'nope': 'no',
     }
 
     PROFESSORS = [
@@ -83,8 +56,24 @@ class  OxyCSBot(ChatBot):
         been identified.
         """
         super().__init__(default_state='waiting')
-        self.name = None
+        self.professor = None
 
+    def get_office_hours(self, professor):
+        """Find the office hours of a professor.
+        Arguments:
+            professor (str): The professor of interest.
+        Returns:
+            str: The office hours of that professor.
+        """
+        office_hours = {
+            'celia': 'unknown',
+            'hsing-hau': 'MW 3:30-4:30pm; F 11:45am-12:45pm',
+            'jeff': 'W 4-5pm; Th 12:50-1:50pm; F 4-5pm',
+            'justin': 'T 3-4pm; W 2-3pm; F 4-5pm',
+            'kathryn': 'MF 4-5:30pm',
+            'umit': 'M 3-5pm; W 10am-noon, 3-5pm',
+        }
+        return office_hours[professor]
 
     def get_office(self, professor):
         """Find the office of a professor.
@@ -113,7 +102,7 @@ class  OxyCSBot(ChatBot):
         Returns:
             str: The message to send to the user.
         """
-        self.name = None
+        self.professor = None
         if 'office-hours' in tags:
             for professor in self.PROFESSORS:
                 if professor in tags:
@@ -121,10 +110,11 @@ class  OxyCSBot(ChatBot):
                     return self.go_to_state('specific_faculty')
             return self.go_to_state('unknown_faculty')
         elif 'thanks' in tags:
-            return self.finish('generic')
+            return self.finish('thanks')
         else:
             return self.finish('confused')
 
+    # "specific_faculty" state functions
 
     def on_enter_specific_faculty(self):
         """Send a message when entering the "specific_faculty" state."""
@@ -133,7 +123,6 @@ class  OxyCSBot(ChatBot):
             'Do you know where their office is?',
         ])
         return response
-
 
     def respond_from_specific_faculty(self, message, tags):
         """Decide what state to go to from the "specific_faculty" state.
@@ -193,18 +182,25 @@ class  OxyCSBot(ChatBot):
 
     # "finish" functions
 
-    def finish_negative(self):
+    def finish_confused(self):
         """Send a message and go to the default state."""
-        return "Trust me it wasn’t that bad. Feel free to come back for more practice! See you!"
+        return "Sorry, I'm just a simple bot that can't understand much. You can ask me about office hours though!"
 
-    def finish_positive(self):
+    def finish_location(self):
         """Send a message and go to the default state."""
-        return 'Awesome! Glad I could help!'
+        return f"{self.professor.capitalize()}'s office is in {self.get_office(self.professor)}"
 
-    def finish_generic(self):
+    def finish_success(self):
         """Send a message and go to the default state."""
-        return "Well, it was nice talking to you! I hope you were able to gain something from this experience."
+        return 'Great, let me know if you need anything else!'
 
+    def finish_fail(self):
+        """Send a message and go to the default state."""
+        return "I've tried my best but I still don't understand. Maybe try asking other students?"
+
+    def finish_thanks(self):
+        """Send a message and go to the default state."""
+        return "You're welcome!"
 
 
 if __name__ == '__main__':
