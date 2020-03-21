@@ -162,10 +162,32 @@ class OxyCSBot(ChatBot):
         return response
 
     def on_enter_start_interview(self):
+        self.count = 10
         response = "Good morning. I’m SIA, pleased to meet you. I’ll be interviewing you today."
         return response
 
-    def 
+    def on_enter_weaknesses(self):
+        self.count = 10
+        response = "What is a weakness that you have?"
+        return response
+
+    def on_enter_weakness_feedback(self):
+        self.count = 11
+        response = "(So, this is a tough one. You want to be honest about your answer,",
+        "but you also want to pick a weakness that won’t hurt your chances of getting the position that you’re going for.)"
+        return response
+
+    def on_enter_challenge(self):
+        self.count = 12
+        response = "Describe a time you were struggling with a challenge. How did you overcome it and what did you learn?"
+        return response
+
+    def on_enter_challenge_response(self):
+        
+
+
+
+
 
 
 
