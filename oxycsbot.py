@@ -18,12 +18,9 @@ class  OxyCSBot(ChatBot):
     ]
 
     TAGS = {
-        # intent
-        'office hours': 'office-hours',
-        'OH': 'office-hours',
-        'help': 'office-hours',
 
-        # professors
+        'interview':'interview',
+        # company name
         'kathryn': 'kathryn',
         'leonard': 'kathryn',
         'justin': 'justin',
@@ -35,7 +32,7 @@ class  OxyCSBot(ChatBot):
         'umit': 'umit',
         'yalcinalp': 'umit',
 
-        # generic
+        # job description
         'thanks': 'thanks',
         'okay': 'success',
         'bye': 'success',
@@ -62,22 +59,6 @@ class  OxyCSBot(ChatBot):
         super().__init__(default_state='waiting')
         self.name = None
 
-    def get_office_hours(self, professor):
-        """Find the office hours of a professor.
-        Arguments:
-            professor (str): The professor of interest.
-        Returns:
-            str: The office hours of that professor.
-        """
-        office_hours = {
-            'celia': 'unknown',
-            'hsing-hau': 'MW 3:30-4:30pm; F 11:45am-12:45pm',
-            'jeff': 'W 4-5pm; Th 12:50-1:50pm; F 4-5pm',
-            'justin': 'T 3-4pm; W 2-3pm; F 4-5pm',
-            'kathryn': 'MF 4-5:30pm',
-            'umit': 'M 3-5pm; W 10am-noon, 3-5pm',
-        }
-        return office_hours[professor]
 
     def get_office(self, professor):
         """Find the office of a professor.
