@@ -18,8 +18,6 @@ class OxyCSBot(ChatBot):
     TAGS = {
         # intent
         'hello':'hello',
-        'hi':'hello',
-        'hey':'hello',
         'interview': 'interview',
         'office hours': 'office-hours',
         'OH': 'office-hours',
@@ -123,7 +121,7 @@ class OxyCSBot(ChatBot):
             return self.go_to_state('unknown_faculty')
         elif 'thanks' in tags:
             return self.finish('thanks')
-        elif 'hello' or 'hi' or 'hey' in tags:
+        elif 'hello' in tags:
             return self.go_to_state('hello')
         else:
             return self.finish('confused')
