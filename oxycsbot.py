@@ -65,10 +65,13 @@ class OxyCSBot(ChatBot):
         been identified.
         """
         super().__init__(default_state='waiting')
+        self.count = 1
         self.professor = None
 
     def on_enter_hello(self):
-        return "Hello, I'm SIA, a student interview assistant. \n" , self.finish('confused')
+        self.count++1
+    
+        return "Hello, I'm SIA, a student interview assistant.", '\n', self.finish('confused')
 
     def get_office_hours(self, professor):
         """Find the office hours of a professor.
@@ -114,17 +117,10 @@ class OxyCSBot(ChatBot):
         Returns:
             str: The message to send to the user.
         """
-        self.professor = None
-        if 'office-hours' in tags:
-            for professor in self.PROFESSORS:
-                if professor in tags:
-                    self.professor = professor
-                    return self.go_to_state('specific_faculty')
-            return self.go_to_state('unknown_faculty')
+        if self.count == 1:
+            return self.go_to_state('hello')
         elif 'thanks' in tags:
             return self.finish('thanks')
-        elif 'hello' in tags:
-            return self.go_to_state('hello')
         else:
             return self.finish('confused')
 
