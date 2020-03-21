@@ -11,12 +11,15 @@ class OxyCSBot(ChatBot):
         'specific_faculty',
         'unknown_faculty',
         'unrecognized_faculty',
-        'interview'
+        'interview',
+        'hello'
     ]
 
     TAGS = {
         # intent
-
+        'hello':'hello',
+        'hi':'hello',
+        'hey':'hello',
         'interview': 'interview',
         'office hours': 'office-hours',
         'OH': 'office-hours',
@@ -64,8 +67,8 @@ class OxyCSBot(ChatBot):
         super().__init__(default_state='waiting')
         self.professor = None
 
-    def on_enter_interview(self):
-        return "Hello."
+    def on_enter_hello(self):
+        return "Hello, I'm SIA, a student interview assistant."
 
     def get_office_hours(self, professor):
         """Find the office hours of a professor.
@@ -120,8 +123,8 @@ class OxyCSBot(ChatBot):
             return self.go_to_state('unknown_faculty')
         elif 'thanks' in tags:
             return self.finish('thanks')
-        elif 'interview' in tags:
-            return self.go_to_state('interview')
+        elif 'hello' or 'hi' or 'hey' in tags:
+            return self.go_to_state('hello')
         else:
             return self.finish('confused')
 
