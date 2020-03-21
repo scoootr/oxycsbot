@@ -12,14 +12,21 @@ class OxyCSBot(ChatBot):
         'unknown_faculty',
         'unrecognized_faculty',
         'interview',
-        'hello'
-        'introduction'
-        'save_name'
-        'indentify_company'
-        'save_company'
-        'position'
-        'transition_interview'
-        'interview_decision'
+        'hello',
+        'introduction',
+        'save_name',
+        'indentify_company',
+        'save_company',
+        'position',
+        'transition_interview',
+        'interview_decision',
+        'start_interview',
+        'weaknesses',
+        'weakness_feedback',
+        'challenge',
+        'challenge_feedback',
+        'experience'
+
     ]
 
     TAGS = {
@@ -65,8 +72,6 @@ class OxyCSBot(ChatBot):
         'kathryn',
         'umit',
     ]
-
-
 
 
     def __init__(self):
@@ -182,15 +187,22 @@ class OxyCSBot(ChatBot):
         response = "Describe a time you were struggling with a challenge. How did you overcome it and what did you learn?"
         return response
 
-    def on_enter_challenge_response(self):
-        
+    def on_enter_challenge_feedback(self):
+        self.count = 13
+        response = "(One important thing to remember about this question is",
+        " that you want to make sure that this challenge adds to your sense of",
+        "person or adds to the interviewer’s perception of you. What does your ",
+        "experience with this challenge and how you overcame it tell the interviewer",
+        " about you?)"
+        return response
+
+    def on_enter_experience(self):
+        self.count = 14
+        response = "Do you have any work experience or extracurriculars?"
+        return response
 
 
-
-
-
-
-
+# JUSTIN'S STATES
     def get_office_hours(self, professor):
         """Find the office hours of a professor.
         Arguments:
@@ -253,6 +265,16 @@ class OxyCSBot(ChatBot):
             return self.go_to_state('interview_decision')
         elif self.count == 9:
             return self.go_to_state('start_interview')
+        elif self.count == 10:
+            return self.go_to_state('weaknesses')
+        elif self.count == 11:
+            return self.go_to_state('weakness_feedback')
+        elif self.count == 12:
+            return self.go_to_state('challenge')
+        elif self.count == 13:
+            return self.go_to_state('challenge_feedback')
+        elif self.count == 14:
+            return self.go_to_state('experience')
         elif 'thanks' in tags:
             return self.finish('thanks')
         else:
