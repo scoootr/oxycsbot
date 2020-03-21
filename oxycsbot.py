@@ -65,12 +65,8 @@ class OxyCSBot(ChatBot):
         self.professor = None
 
     def on_enter_interview(self,tags,message):
-        if 'interview' in tags:
 
-
-            return "Hello."
-        else:
-            return "Bye."
+        return "Hello."
 
     def get_office_hours(self, professor):
         """Find the office hours of a professor.
