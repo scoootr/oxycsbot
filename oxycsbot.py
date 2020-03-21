@@ -161,6 +161,12 @@ class OxyCSBot(ChatBot):
             ])
         return response
 
+    def on_enter_start_interview(self):
+        response = "Good morning. I’m SIA, pleased to meet you. I’ll be interviewing you today."
+        return response
+
+    def 
+
 
 
     def get_office_hours(self, professor):
