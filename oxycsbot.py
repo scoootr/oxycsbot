@@ -18,6 +18,8 @@ class OxyCSBot(ChatBot):
     TAGS = {
         # intent
         'hello':'hello',
+        'hey':'hello',
+        'hi':'hello',
         'interview': 'interview',
         'office hours': 'office-hours',
         'OH': 'office-hours',
