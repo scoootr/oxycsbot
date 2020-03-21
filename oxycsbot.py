@@ -84,7 +84,7 @@ class  OxyCSBot(ChatBot):
         """
         super().__init__(default_state='waiting')
         self.name = None
-        return "Hello"
+
 
     def get_office(self, professor):
         """Find the office of a professor.
@@ -307,7 +307,7 @@ class  OxyCSBot(ChatBot):
         """Send a message and go to the default state."""
         return "Well, it was nice talking to you! I hope you were able to gain something from this experience."
 
-    =
+
 
 if __name__ == '__main__':
     OxyCSBot().chat()
