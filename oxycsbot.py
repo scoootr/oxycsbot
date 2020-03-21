@@ -13,6 +13,13 @@ class OxyCSBot(ChatBot):
         'unrecognized_faculty',
         'interview',
         'hello'
+        'introduction'
+        'save_name'
+        'indentify_company'
+        'save_company'
+        'position'
+        'transition_interview'
+        'interview_decision'
     ]
 
     TAGS = {
@@ -43,8 +50,11 @@ class OxyCSBot(ChatBot):
         'bye': 'success',
         'yes': 'yes',
         'yep': 'yes',
+        'alright': 'yes',
+        'I do' : 'yes',
         'no': 'no',
         'nope': 'no',
+        "I don't" : 'no'
     }
 
     PROFESSORS = [
@@ -69,9 +79,88 @@ class OxyCSBot(ChatBot):
         self.professor = None
 
     def on_enter_hello(self):
-        self.count++1
-    
+        self.count = 2
         return "Hello, I'm SIA, a student interview assistant.", '\n', self.finish('confused')
+
+    def on_enter_introduction(self):
+        self.count = 3
+        response = "Hi I am, I am here to help you work on your interviewing skills. What is your name?"
+        return response
+
+    def on_enter_save_name(self):
+        self.count = 4
+        response = '\n'.join([
+            "Hi, I am looking forward to helping you work on your interview skills.",
+        ]),
+        return response
+
+    def on_enter_identify_company(self):
+        self.count = 5
+        response = '\n'.join([
+            "Is there a specific company you are planning to apply to, and if so, what is it?"
+        ])
+        return response
+
+    def on_enter_save_company(self,tags):
+        self.count = 6
+        if 'yes' in tags:
+            # assign self.company to inputted company name
+            response = '\n'.join([
+                "Great! What position are you applying for?"
+            ])
+        elif 'no' in tags:
+            response = '\n'.join([
+                "No problem! How about a specific position?"
+            ])
+        else:
+            response = "Okay"
+        return response
+
+    def on_enter_position(self, tags):
+        self.count = 7
+        if 'yes' in tags:
+            response = '\n'.join([
+                "Wow, that sounds like an amazing opportunity!"
+            ])
+        elif 'no' in tags:
+            response = '\n'.join([
+                "Don't worry that's fine! I'll still prepare you for whatever comes your way"
+            ])
+        else:
+            response = '\n'.join([
+                "Okay thanks for letting me know."
+            ])
+        return response
+
+    def on_enter_transition_interview(self):
+        self.count = 8
+
+        response ="Would you like to start a casual mock interview?",
+        "It would only take around five minutes.",
+        "I’ll ask you some of the most common interview questions",
+        "and give you a few pointers in parenthesis along the way."
+
+        return response
+
+    def on_enter_interview_decision(self):
+        self.count = 9
+
+        if 'yes' in tags:
+            response = '\n'.join([
+                "Great, let’s begin! Remember, you should treat this as if it was a “real” interview,",
+                " so be purposeful with your words. I’ll be right back, I’m gonna change into my suit and tie!"
+                ])
+        elif 'no' in tags:
+            response = '\n'.join([
+                "Unfortunately, the best way for me to give you feedback would be through conversation."
+            ])
+        else:
+            response = '\n'.join([
+                "Sorry, could you please clarify."
+            ])
+        return response
+
+
 
     def get_office_hours(self, professor):
         """Find the office hours of a professor.
