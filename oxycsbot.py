@@ -141,8 +141,7 @@ class OxyCSBot(ChatBot):
 
     def on_enter_unknown_faculty(self):
         """Send a message when entering the "unknown_faculty" state."""
-        print ("Hello")
-        return "Who's office hours are you looking for?"
+        return "Hello."
 
     def respond_from_unknown_faculty(self, message, tags):
         """Decide what state to go to from the "unknown_faculty" state.
