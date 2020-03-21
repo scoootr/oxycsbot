@@ -65,7 +65,6 @@ class OxyCSBot(ChatBot):
         Returns:
             str: The office hours of that professor.
         """
-        print ("Hello, How are you.")
         office_hours = {
             'celia': 'unknown',
             'hsing-hau': 'MW 3:30-4:30pm; F 11:45am-12:45pm',
@@ -142,6 +141,7 @@ class OxyCSBot(ChatBot):
 
     def on_enter_unknown_faculty(self):
         """Send a message when entering the "unknown_faculty" state."""
+        print ("Hello")
         return "Who's office hours are you looking for?"
 
     def respond_from_unknown_faculty(self, message, tags):
