@@ -1,10 +1,11 @@
-#!/usr/bin/env python3
+
+
 """A simple chatbot that directs students to office hours of CS professors."""
 
 from chatbot import ChatBot
 
 
-class OxyCSBot(ChatBot):
+class  OxyCSBot(ChatBot):
     """A simple chatbot that directs students to office hours of CS professors."""
 
     STATES = [
@@ -12,6 +13,10 @@ class OxyCSBot(ChatBot):
         'specific_faculty',
         'unknown_faculty',
         'unrecognized_faculty',
+        'introduction',
+        'save_name',
+        'indentify_company',
+        'save_company'
     ]
 
     TAGS = {
@@ -53,19 +58,16 @@ class OxyCSBot(ChatBot):
 
     def __init__(self):
         """Initialize the OxyCSBot.
-
         The `professor` member variable stores whether the target professor has
         been identified.
         """
         super().__init__(default_state='waiting')
-        self.professor = None
+        self.name = None
 
     def get_office_hours(self, professor):
         """Find the office hours of a professor.
-
         Arguments:
             professor (str): The professor of interest.
-
         Returns:
             str: The office hours of that professor.
         """
@@ -81,10 +83,8 @@ class OxyCSBot(ChatBot):
 
     def get_office(self, professor):
         """Find the office of a professor.
-
         Arguments:
             professor (str): The professor of interest.
-
         Returns:
             str: The office of that professor.
         """
@@ -102,27 +102,122 @@ class OxyCSBot(ChatBot):
 
     def respond_from_waiting(self, message, tags):
         """Decide what state to go to from the "waiting" state.
-
         Parameters:
             message (str): The incoming message.
             tags (Mapping[str, int]): A count of the tags that apply to the message.
-
         Returns:
             str: The message to send to the user.
         """
-        self.professor = None
-        if 'office-hours' in tags:
-            for professor in self.PROFESSORS:
-                if professor in tags:
-                    self.professor = professor
-                    return self.go_to_state('specific_faculty')
-            return self.go_to_state('unknown_faculty')
+        self.name = None
+        if 'interview' in tags:
+            return self.go_to_state('introduction')
         elif 'thanks' in tags:
-            return self.finish('thanks')
+            return self.finish('generic')
         else:
             return self.finish('confused')
 
-    # "specific_faculty" state functions
+    def on_enter_introduction(self):
+        # Send a message when entering the introduction state.
+        response = '\n'.join([
+            "Hi I am, I am here to help you work on your interviewing skills.",
+            "What is your name?"
+        ])
+        return response, self.go_to_state('save_name')
+
+    def on_enter_save_name(self, message, tags):
+        """ Define name of user
+        Parameters:
+            message (str): The incoming message.
+            tags (Mapping[str, int]): A count of the tags that apply to the message.
+        Returns:
+            str: The message to send to the user.
+        """
+
+        """ must parse message and save name to self.name?"""
+
+        response = '\n'.join([
+            f"Hi, {self.name}, I am looking forward to helping you work on your interview skills.",
+        ]),
+
+        return response, self.go_to_state('indentify_company')
+
+    def on_enter_identify_company(self, message, tags):
+        response = '\n'.join([
+            "Is there a specific company you are planning to apply to, and if so, what is it?"
+        ])
+        return response, self.go_to_state('save_company')
+
+    def on_enter_save_company(self,message,tags):
+        if 'yes' in tags:
+            # assign self.company to inputted company name
+            response = '\n'.join([
+                "Great! What position are you applying for?"
+            ])
+            return self.go_to_state('position')
+        elif 'no' in tags:
+            response = '\n'.join([
+                "No problem! How about a specific position?"
+            ])
+            return self.go_to_state('position')
+        else:
+            response = '\n'.join([
+                "Okay."
+            ])
+            return self.go_to_state('position')
+
+    def on_enter_position(self, message, tags):
+        if 'yes' in tags:
+            response = '\n'.join([
+                "Wow, that sounds like an amazing opportunity!"
+            ])
+        elif 'no' in tags:
+            response = '\n'.join([
+                "Don't worry that's fine! I'll still prepare you for whatever comes your way"
+            ])
+        else:
+            response = '\n'.join([
+                "Okaym thanks for letting me know."
+            ])
+        return response, self.go_to_state('transition_interview')
+
+    def on_enter_transition_interview(self):
+        response = '\n'.join([
+            "Would you like to start a casual mock interview?",
+            "It would only take around five minutes.",
+            "I’ll ask you some of the most common interview questions",
+            "and give you a few pointers in parenthesis along the way."
+        ])
+        return response, self.go_to_state('interview_decision')
+
+    def on_enter_interview_decision(self, message, tags):
+        if 'yes' in tags:
+            response = '\n'.join([
+                "Great, let’s begin! Remember, you should treat this as if it was a “real” interview,",
+                " so be purposeful with your words. I’ll be right back, I’m gonna change into my suit and tie!"
+                ])
+            return response, self.go_to_state('start_interview')
+        elif 'no' in tags:
+            response = '\n'.join([
+                "Unfortunately, the best way for me to give you feedback would be through conversation."
+            ])
+            return response, self.finish('generic')
+        else:
+            response = '\n'.join([
+                "Sorry, could you please clarify."
+            ])
+            return response, self.go_to_state('interview_decision')
+
+    def on_enter_start_interview(self):
+        response = '\n'.join([
+            f"Good morning {self.name}. I’m Siri , pleased to meet you.",
+            " I’ll be interviewing you today."
+        ])
+        return response, self.go_to_state('strengths_question')
+
+
+
+
+
 
     def on_enter_specific_faculty(self):
         """Send a message when entering the "specific_faculty" state."""
@@ -132,13 +227,12 @@ class OxyCSBot(ChatBot):
         ])
         return response
 
+
     def respond_from_specific_faculty(self, message, tags):
         """Decide what state to go to from the "specific_faculty" state.
-
         Parameters:
             message (str): The incoming message.
             tags (Mapping[str, int]): A count of the tags that apply to the message.
-
         Returns:
             str: The message to send to the user.
         """
@@ -155,11 +249,9 @@ class OxyCSBot(ChatBot):
 
     def respond_from_unknown_faculty(self, message, tags):
         """Decide what state to go to from the "unknown_faculty" state.
-
         Parameters:
             message (str): The incoming message.
             tags (Mapping[str, int]): A count of the tags that apply to the message.
-
         Returns:
             str: The message to send to the user.
         """
@@ -180,11 +272,9 @@ class OxyCSBot(ChatBot):
 
     def respond_from_unrecognized_faculty(self, message, tags):
         """Decide what state to go to from the "unrecognized_faculty" state.
-
         Parameters:
             message (str): The incoming message.
             tags (Mapping[str, int]): A count of the tags that apply to the message.
-
         Returns:
             str: The message to send to the user.
         """
@@ -196,26 +286,19 @@ class OxyCSBot(ChatBot):
 
     # "finish" functions
 
-    def finish_confused(self):
+    def finish_negative(self):
         """Send a message and go to the default state."""
-        return "Sorry, I'm just a simple bot that can't understand much. You can ask me about office hours though!"
+        return "Trust me it wasn’t that bad. Feel free to come back for more practice! See you!"
 
-    def finish_location(self):
+    def finish_positive(self):
         """Send a message and go to the default state."""
-        return f"{self.professor.capitalize()}'s office is in {self.get_office(self.professor)}"
+        return 'Awesome! Glad I could help!'
 
-    def finish_success(self):
+    def finish_generic(self):
         """Send a message and go to the default state."""
-        return 'Great, let me know if you need anything else!'
+        return "Well, it was nice talking to you! I hope you were able to gain something from this experience."
 
-    def finish_fail(self):
-        """Send a message and go to the default state."""
-        return "I've tried my best but I still don't understand. Maybe try asking other students?"
-
-    def finish_thanks(self):
-        """Send a message and go to the default state."""
-        return "You're welcome!"
-
+    =
 
 if __name__ == '__main__':
     OxyCSBot().chat()
