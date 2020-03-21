@@ -78,6 +78,7 @@ class OxyCSBot(ChatBot):
         self.count = 1
         self.professor = None
 
+    #SIA STATES
     def on_enter_hello(self):
         self.count = 2
         return "Hello, I'm SIA, a student interview assistant.", '\n', self.finish('confused')
@@ -208,6 +209,22 @@ class OxyCSBot(ChatBot):
         """
         if self.count == 1:
             return self.go_to_state('hello')
+        elif self.count == 2:
+            return self.go_to_state('introduction')
+        elif self.count == 3:
+            return self.go_to_state('save_name')
+        elif self.count == 4:
+            return self.go_to_state('indentify_company')
+        elif self.count == 5:
+            return self.go_to_state('save_company')
+        elif self.count == 6:
+            return self.go_to_state('position')
+        elif self.count == 7:
+            return self.go_to_state('transition_interview')
+        elif self.count == 8:
+            return self.go_to_state('interview_decision')
+        elif self.count == 9:
+            return self.go_to_state('start_interview')
         elif 'thanks' in tags:
             return self.finish('thanks')
         else:
