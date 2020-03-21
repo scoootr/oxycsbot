@@ -19,6 +19,32 @@ class  OxyCSBot(ChatBot):
 
     TAGS = {
 
+         # intent
+        'office hours': 'office-hours',
+        'OH': 'office-hours',
+        'help': 'office-hours',
+
+        # professors
+        'kathryn': 'kathryn',
+        'leonard': 'kathryn',
+        'justin': 'justin',
+        'li': 'justin',
+        'jeff': 'jeff',
+        'miller': 'jeff',
+        'celia': 'celia',
+        'hsing-hau': 'hsing-hau',
+        'umit': 'umit',
+        'yalcinalp': 'umit',
+
+        # generic
+        'thanks': 'thanks',
+        'okay': 'success',
+        'bye': 'success',
+        'yes': 'yes',
+        'yep': 'yes',
+        'no': 'no',
+        'nope': 'no',
+
         'interview':'interview',
         # company name
         'kathryn': 'kathryn',
@@ -88,8 +114,12 @@ class  OxyCSBot(ChatBot):
             str: The message to send to the user.
         """
         self.name = None
-        if 'interview' in tags:
-            return self.go_to_state('introduction')
+        if 'office-hours' in tags:
+            for professor in self.PROFESSORS:
+                if professor in tags:
+                    self.professor = professor
+                    return self.go_to_state('specific_faculty')
+            return self.go_to_state('unknown_faculty')
         elif 'thanks' in tags:
             return self.finish('generic')
         else:
