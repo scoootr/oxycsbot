@@ -125,7 +125,7 @@ class OxyCSBot(ChatBot):
             return self.go_to_state('unknown_faculty')
         elif 'thanks' in tags:
             return self.finish('thanks')
-        elif ' interview' in tags:
+        elif 'interview' in tags:
             return self.go_to_state('interview')
         else:
             return self.finish('confused')
