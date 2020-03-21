@@ -64,8 +64,7 @@ class OxyCSBot(ChatBot):
         super().__init__(default_state='waiting')
         self.professor = None
 
-    def on_enter_interview(self,tags,message):
-
+    def on_enter_interview(self):
         return "Hello."
 
     def get_office_hours(self, professor):
