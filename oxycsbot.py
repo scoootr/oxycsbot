@@ -68,9 +68,6 @@ class OxyCSBot(ChatBot):
 
     YES = [
         'yes',
-        'yep',
-        'I do',
-        'alright',
     ]
 
     NO = [
