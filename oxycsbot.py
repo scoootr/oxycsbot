@@ -27,6 +27,7 @@ class OxyCSBot(ChatBot):
         'challenge',
         'challenge_feedback',
         'experience',
+        'experience_feedback',
     ]
 
     TAGS = {
