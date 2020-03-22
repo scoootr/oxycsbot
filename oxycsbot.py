@@ -199,7 +199,10 @@ class OxyCSBot(ChatBot):
             return self.response
         else:
             self.response = "Sorry, could you please clarify."
-        return self.response
+            return self.response
+    def respond_from_interview_decision(self,message,tags):
+        return self.go_to_state('unknown_faculty')
+
 """
     def on_enter_start_interview(self):
         self.count = 10
