@@ -178,9 +178,22 @@ class OxyCSBot(ChatBot):
     def respond_from_save_company(self,message,tags):
         return self.go_to_state('unknown_faculty')
 
+    def on_enter_position(self):
+        if 'yes' in self.TAGS:
+            return "Wow, that sounds like an amazing opportunity!"
+        elif 'no' in self.TAGS:
+            return "Don't worry that's fine! I'll still prepare you for whatever comes your way."
+        else:
+            return "Okay thanks for letting me know.""
+
+    def respond_from_position(self, message, tags):
+        return self.go_to_state('unknown_faculty')
+
     def on_enter_unknown_faculty(self):
         """Send a message when entering the "unknown_faculty" state."""
         return "Who's office hours are you looking for?"
+
+
 
     def respond_from_unknown_faculty(self, message, tags):
         """Decide what state to go to from the "unknown_faculty" state.
@@ -195,6 +208,9 @@ class OxyCSBot(ChatBot):
                 self.professor = professor
                 return self.go_to_state('specific_faculty')
         return self.go_to_state('unrecognized_faculty')
+
+
+
 
     # "unrecognized_faculty" state functions
 
