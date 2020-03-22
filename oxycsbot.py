@@ -34,6 +34,8 @@ class OxyCSBot(ChatBot):
         'hello': 'hello',
         'hey': 'hello',
         'hi': 'hello',
+        'cool': 'introduction',
+        'awesome': 'introduction',
         'interview': 'interview',
         'Yes':'transition_interview',
         'Sure':'transition_interview',
