@@ -75,7 +75,7 @@ class OxyCSBot(ChatBot):
 
     NO = [
         'no',
-        'nope'
+        'nope',
     ]
 
 
@@ -212,7 +212,7 @@ class OxyCSBot(ChatBot):
     def on_enter_interview_yes(self):
         return "Great, let’s begin! Remember, you should treat this as if it was a “real” interview, so be purposeful with your words. I’ll be right back, I’m gonna change into my suit and tie!"
     def respond_from_interview_yes(self, message, tags):
-        return self.go_to_state('unknown_faculty')
+        return self.go_to_state('start_interview')
 
     def on_enter_interview_no(self):
         return "Unfortunately, the best way for me to give you feedback would be through conversation."
@@ -221,7 +221,8 @@ class OxyCSBot(ChatBot):
 
     def on_enter_start_interview(self):
         return "Good morning. I’m SIA, pleased to meet you. I’ll be interviewing you today."
-    def respond_from_start_interview(self)
+    def respond_from_start_interview(self,message,tags):
+        return self.finish('success')
 
 
 
