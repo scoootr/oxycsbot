@@ -293,7 +293,7 @@ class OxyCSBot(ChatBot):
 
     def finish_fail(self):
         """Send a message and go to the default state."""
-        return "I've tried my best but I still don't understand. Maybe try asking other students?"
+        return "If you ever change your mind, feel free to visit me again!"
 
     def finish_thanks(self):
         """Send a message and go to the default state."""
