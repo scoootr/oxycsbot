@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """A simple chatbot that directs students to office hours of CS professors."""
 
 from chatbot import ChatBot
@@ -11,35 +12,25 @@ class OxyCSBot(ChatBot):
         'specific_faculty',
         'unknown_faculty',
         'unrecognized_faculty',
-        'interview',
-        'hello',
-        'introduction',
-        'save_name',
-        'identify_company',
-        'save_company',
-        'position',
-        'transition_interview',
-        'interview_decision',
-        'start_interview',
-        'weaknesses',
-        'weakness_feedback',
-        'challenge',
-        'challenge_feedback',
-        'experience'
-
     ]
 
     TAGS = {
         # intent
-        'hello': 'hello',
-        'hey': 'hello',
-        'hi': 'hello',
-        'cool': 'introduction',
-        'awesome': 'introduction',
-        'interview': 'interview',
-        'Yes':'transition_interview',
-        'Sure':'transition_interview',
+        'office hours': 'office-hours',
+        'OH': 'office-hours',
+        'help': 'office-hours',
 
+        # professors
+        'kathryn': 'kathryn',
+        'leonard': 'kathryn',
+        'justin': 'justin',
+        'li': 'justin',
+        'jeff': 'jeff',
+        'miller': 'jeff',
+        'celia': 'celia',
+        'hsing-hau': 'hsing-hau',
+        'umit': 'umit',
+        'yalcinalp': 'umit',
 
         # generic
         'thanks': 'thanks',
@@ -47,11 +38,8 @@ class OxyCSBot(ChatBot):
         'bye': 'success',
         'yes': 'yes',
         'yep': 'yes',
-        'alright': 'yes',
-        'I do': 'yes',
         'no': 'no',
         'nope': 'no',
-        "I don't": 'no'
     }
 
     PROFESSORS = [
@@ -63,147 +51,14 @@ class OxyCSBot(ChatBot):
         'umit',
     ]
 
-
     def __init__(self):
         """Initialize the OxyCSBot.
         The `professor` member variable stores whether the target professor has
         been identified.
         """
         super().__init__(default_state='waiting')
-        self.count = 1
-        self.name = None
-        self.company = None
-        self.job = None
+        self.professor = None
 
-    #SIA STATES
-    def on_enter_hello(self):
-        return "hello"
-
-    def respond_from_hello(self, message, tags):
-        return self.go_to_state('introduction')
-
-    def on_enter_introduction(self):
-        self.count = 3
-        response = '\n'.join([
-        "I am here to help you work on your interviewing skills. What is your name?"
-        ])
-        #self.name = input(str)
-        return response
-
-
-""" the syntax isn't quite right here
-    def on_enter_save_name(self):
-        self.count = 4
-        response = '\n'.join([
-            "Hi, ", self.name, " I am looking forward to helping you work on your interview skills.",
-        ]),
-        return response
-"""
-    def on_enter_identify_company(self):
-        self.count = 5
-        response = '\n'.join([
-            "Is there a specific company you are planning to apply to, and if so, what is it?"
-        ])
-        return response
-
-    def on_enter_save_company(self,tags):
-        self.count = 6
-        if 'yes' in tags:
-            # assign self.company to inputted company name
-            response = '\n'.join([
-                "Great! What position are you applying for?"
-            ])
-        elif 'no' in tags:
-            response = '\n'.join([
-                "No problem! How about a specific position?"
-            ])
-        else:
-            response = "Okay"
-        return response
-
-    def on_enter_position(self, tags):
-        self.count = 7
-        if 'yes' in tags:
-            response = '\n'.join([
-                "Wow, that sounds like an amazing opportunity!"
-            ])
-        elif 'no' in tags:
-            response = '\n'.join([
-                "Don't worry that's fine! I'll still prepare you for whatever comes your way"
-            ])
-        else:
-            response = '\n'.join([
-                "Okay thanks for letting me know."
-            ])
-        return response
-
-    def on_enter_transition_interview(self):
-        self.count = 8
-
-        response ="Would you like to start a casual mock interview?",
-        "It would only take around five minutes.",
-        "I’ll ask you some of the most common interview questions",
-        "and give you a few pointers in parenthesis along the way."
-
-        return response
-
-    def on_enter_interview_decision(self):
-        self.count = 9
-
-        if 'yes' in tags:
-            response = '\n'.join([
-                "Great, let’s begin! Remember, you should treat this as if it was a “real” interview,",
-                " so be purposeful with your words. I’ll be right back, I’m gonna change into my suit and tie!"
-                ])
-            return response
-        elif 'no' in tags:
-            response = '\n'.join([
-                "Unfortunately, the best way for me to give you feedback would be through conversation."
-            ])
-            return response
-        else:
-            response = '\n'.join([
-                "Sorry, could you please clarify."
-            ])
-        return response
-
-    def on_enter_start_interview(self):
-        self.count = 10
-        response = "Good morning. I’m SIA, pleased to meet you. I’ll be interviewing you today."
-        return response
-
-    def on_enter_weaknesses(self):
-        self.count = 10
-        response = "What is a weakness that you have?"
-        return response
-
-    def on_enter_weakness_feedback(self):
-        self.count = 11
-        response = "(So, this is a tough one. You want to be honest about your answer,",
-        "but you also want to pick a weakness that won’t hurt your chances of getting the position that you’re going for.)"
-        return response
-
-    def on_enter_challenge(self):
-        self.count = 12
-        response = "Describe a time you were struggling with a challenge. How did you overcome it and what did you learn?"
-        return response
-
-    def on_enter_challenge_feedback(self):
-        self.count = 13
-        response = "(One important thing to remember about this question is",
-        " that you want to make sure that this challenge adds to your sense of",
-        "person or adds to the interviewer’s perception of you. What does your ",
-        "experience with this challenge and how you overcame it tell the interviewer",
-        " about you?)"
-        return response
-
-    def on_enter_experience(self):
-        self.count = 14
-        response = "Do you have any work experience or extracurriculars?"
-        return response
-
-
-# JUSTIN'S STATES
     def get_office_hours(self, professor):
         """Find the office hours of a professor.
         Arguments:
@@ -248,8 +103,13 @@ class OxyCSBot(ChatBot):
         Returns:
             str: The message to send to the user.
         """
-        if 'hello' in tags:
-            return self.go_to_state('hello')
+        self.professor = None
+        if 'office-hours' in tags:
+            for professor in self.PROFESSORS:
+                if professor in tags:
+                    self.professor = professor
+                    return self.go_to_state('specific_faculty')
+            return self.go_to_state('unknown_faculty')
         elif 'thanks' in tags:
             return self.finish('thanks')
         else:
@@ -282,7 +142,7 @@ class OxyCSBot(ChatBot):
 
     def on_enter_unknown_faculty(self):
         """Send a message when entering the "unknown_faculty" state."""
-        return "Hello."
+        return "Who's office hours are you looking for?"
 
     def respond_from_unknown_faculty(self, message, tags):
         """Decide what state to go to from the "unknown_faculty" state.
