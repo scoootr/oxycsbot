@@ -175,7 +175,7 @@ class OxyCSBot(ChatBot):
     def on_enter_save_company(self):
         if 'yes' in tags:
             # assign self.company to inputted company name
-            self.response  "Great! What position are you applying for?"
+            self.response = "Great! What position are you applying for?"
         elif 'no' in tags:
             self.response = "No problem! How about a specific position?"
         else:
