@@ -15,7 +15,7 @@ class OxyCSBot(ChatBot):
         'hello',
         'introduction',
         'save_name',
-        'indentify_company',
+        'identify_company',
         'save_company',
         'position',
         'transition_interview',
@@ -243,7 +243,7 @@ class OxyCSBot(ChatBot):
         elif self.count == 3:
             return self.go_to_state('save_name')
         elif self.count == 4:
-            return self.go_to_state('indentify_company')
+            return self.go_to_state('identify_company')
         elif self.count == 5:
             return self.go_to_state('save_company')
         elif self.count == 6:
