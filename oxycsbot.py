@@ -80,10 +80,7 @@ class OxyCSBot(ChatBot):
 
 
     PROFESSORS = [
-<<<<<<< HEAD
         'yes',
-=======
->>>>>>> 72da43cf0fdbf249725d95a68e1db64ed09c0da9
         'celia',
         'hsing-hau',
         'jeff',
@@ -210,13 +207,8 @@ class OxyCSBot(ChatBot):
         for note in self.YES:
             if note in tags:
                 self.note = note
-<<<<<<< HEAD
                 return self.go_to_state('interview_yes')
         return self.go_to_state('interview_no')
-=======
-                return self.finish('interview_yes')
-        return self.finish('interview_no')
->>>>>>> 72da43cf0fdbf249725d95a68e1db64ed09c0da9
 
     def on_enter_interview_yes(self):
         return "Great, let’s begin! Remember, you should treat this as if it was a “real” interview, so be purposeful with your words. I’ll be right back, I’m gonna change into my suit and tie!"
