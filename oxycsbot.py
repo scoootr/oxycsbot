@@ -186,7 +186,7 @@ class OxyCSBot(ChatBot):
 
     def on_enter_transition_interview(self):
         return "Would you like to start a casual mock interview? It would only take around five minutes. I’ll ask you some of the most common interview questions and give you a few pointers in parenthesis along the way."
-
+"""
     def respond_from_transition_interview(self,message,tags):
         return self.go_to_state('interview_decision')
 
@@ -203,7 +203,6 @@ class OxyCSBot(ChatBot):
     def respond_from_interview_decision(self,message,tags):
         return self.go_to_state('unknown_faculty')
 
-"""
     def on_enter_start_interview(self):
         self.count = 10
         response = "Good morning. I’m SIA, pleased to meet you. I’ll be interviewing you today."
