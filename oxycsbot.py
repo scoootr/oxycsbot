@@ -35,21 +35,7 @@ class OxyCSBot(ChatBot):
         'hey':'hello',
         'hi':'hello',
         'interview': 'interview',
-        'office hours': 'office-hours',
-        'OH': 'office-hours',
-        'help': 'office-hours',
 
-        # professors
-        'kathryn': 'kathryn',
-        'leonard': 'kathryn',
-        'justin': 'justin',
-        'li': 'justin',
-        'jeff': 'jeff',
-        'miller': 'jeff',
-        'celia': 'celia',
-        'hsing-hau': 'hsing-hau',
-        'umit': 'umit',
-        'yalcinalp': 'umit',
 
         # generic
         'thanks': 'thanks',
@@ -81,22 +67,25 @@ class OxyCSBot(ChatBot):
         """
         super().__init__(default_state='waiting')
         self.count = 1
-        self.professor = None
+        self.name = None
+        self.company = None
+        self.job = None
 
     #SIA STATES
     def on_enter_hello(self):
         self.count = 2
-        return "Hello, I'm SIA, a student interview assistant.", '\n', self.finish('confused')
+        return "Hello, I'm SIA, a student interview assistant."
 
     def on_enter_introduction(self):
         self.count = 3
         response = "Hi I am, I am here to help you work on your interviewing skills. What is your name?"
+        self.name = input(str)
         return response
 
     def on_enter_save_name(self):
         self.count = 4
         response = '\n'.join([
-            "Hi, I am looking forward to helping you work on your interview skills.",
+            "Hi, ", self.name, " I am looking forward to helping you work on your interview skills.",
         ]),
         return response
 
