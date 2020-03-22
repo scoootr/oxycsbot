@@ -190,7 +190,6 @@ class OxyCSBot(ChatBot):
     def respond_from_transition_in(self,message,tags):
             for tag in self.TAGS:
                 if tag in tags:
-                    self.professor = professor
                     return self.finish('fail')
             return self.go_to_state('unrecognized_faculty')
 
