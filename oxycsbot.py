@@ -14,6 +14,7 @@ class OxyCSBot(ChatBot):
         'unrecognized_faculty',
         'introduction',
         'save_name',
+        'identify_company',
     ]
 
     TAGS = {
@@ -149,9 +150,18 @@ class OxyCSBot(ChatBot):
         return self.go_to_state('save_name')
 
     def on_enter_save_name(self):
-        return "Hi, I am looking forward to helping you work on your interview skills.",
+        return "Hi, I am looking forward to helping you work on your interview skills."
     def respond_from_save_name(self,message,tags):
-        return go_to_state('unknown_faculty')
+        return self.go_to_state('identify_company')
+    def on_enter_identify_company(self):
+        response = '\n'.join([
+            "Is there a specific company you are planning to apply to, and if so, what is it?"
+        ])
+        return response
+    def respond_from_identify_company(self,message,tags):
+        return self.go_to_state('unkown_faculty')
+
+
 
     def on_enter_unknown_faculty(self):
         """Send a message when entering the "unknown_faculty" state."""
