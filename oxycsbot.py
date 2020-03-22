@@ -63,6 +63,7 @@ class OxyCSBot(ChatBot):
         'bye': 'success',
         'yes': 'yes',
         'yep': 'yes',
+        'yeah': 'yes',
         'no': 'no',
         'nope': 'no',
     }
@@ -221,6 +222,21 @@ class OxyCSBot(ChatBot):
         return "Good morning. I’m SIA, pleased to meet you. I’ll be interviewing you today."
     def respond_from_start_interview(self,message,tags):
         return self.finish('success')
+
+    def on_enter_experience(self):
+        return "Do you have any work experience or extracurriculars?"
+    def respond_from_experience(self,message,tags):
+        return self.go_to_state('unknown_faculty')
+
+    def on_enter_challenge(self):
+        return "Describe a time you were struggling with a challenge. How did you overcome it and what did you learn?"
+    def respond_from_challenge(self,message,tags):
+        return self.go_to_state('challenge_feedback'):
+
+    def on_enter_challenge(self):
+        return "(One important thing to remember about this question is that you want to make sure that this challenge adds to your sense of person or adds to the interviewer’s perception of you. What does your experience with this challenge and how you overcame it tell the interviewer about you?)"
+    def respond_from_challenge_feedback(self,message,tags):
+        return self.go_to_state('unknown_faculty')
 
     def on_enter_unknown_faculty(self):
         """Send a message when entering the "unknown_faculty" state."""
