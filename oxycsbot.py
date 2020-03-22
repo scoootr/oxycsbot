@@ -178,7 +178,65 @@ class OxyCSBot(ChatBot):
     def respond_from_save_company(self,message,tags):
         return self.go_to_state('unknown_faculty')
 
+    def on_enter_position(self):
+        return "Okay thanks for letting me know."
 
+    def respond_from_position(self):
+        return self.go_to_state('transition_interview')
+
+    def on_enter_transition_interview(self):
+        return "Would you like to start a casual mock interview? It would only take around five minutes. I’ll ask you some of the most common interview questions and give you a few pointers in parenthesis along the way."
+
+    def respond_from_transition_interview(self,message,tags):
+        return self.go_to_state('interview_decision')
+
+    def on_enter_interview_decision(self):
+        if 'yes' in self.TAGS:
+            self.response = "Great, let’s begin! Remember, you should treat this as if it was a real interview, so be purposeful with your words. I’ll be right back, I’m gonna change into my suit and tie!"
+            return self.response
+        elif 'no' in self.TAGS:
+            self.response = "Unfortunately, the best way for me to give you feedback would be through conversation."
+            return self.response
+        else:
+            self.response = "Sorry, could you please clarify."
+        return self.response
+"""
+    def on_enter_start_interview(self):
+        self.count = 10
+        response = "Good morning. I’m SIA, pleased to meet you. I’ll be interviewing you today."
+        return response
+
+    def on_enter_weaknesses(self):
+        self.count = 10
+        response = "What is a weakness that you have?"
+        return response
+
+    def on_enter_weakness_feedback(self):
+        self.count = 11
+        response = "(So, this is a tough one. You want to be honest about your answer,",
+        "but you also want to pick a weakness that won’t hurt your chances of getting the position that you’re going for.)"
+        return response
+
+    def on_enter_challenge(self):
+        self.count = 12
+        response = "Describe a time you were struggling with a challenge. How did you overcome it and what did you learn?"
+        return response
+
+    def on_enter_challenge_feedback(self):
+        self.count = 13
+        response = "(One important thing to remember about this question is",
+        " that you want to make sure that this challenge adds to your sense of",
+        "person or adds to the interviewer’s perception of you. What does your ",
+        "experience with this challenge and how you overcame it tell the interviewer",
+        " about you?)"
+        return response
+
+    def on_enter_experience(self):
+        self.count = 14
+        response = "Do you have any work experience or extracurriculars?"
+        return response
+
+"""
     def on_enter_unknown_faculty(self):
         """Send a message when entering the "unknown_faculty" state."""
         return "Who's office hours are you looking for?"
