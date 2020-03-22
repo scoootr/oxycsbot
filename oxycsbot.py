@@ -16,6 +16,15 @@ class OxyCSBot(ChatBot):
         'save_name',
         'identify_company',
         'save_company',
+        'position',
+        'transition_interview',
+        'interview_decision',
+        'start_interview',
+        'weaknesses',
+        'weakness_feedback',
+        'challenge',
+        'challenge_feedback',
+        'experience',
     ]
 
     TAGS = {
@@ -155,10 +164,7 @@ class OxyCSBot(ChatBot):
         return self.go_to_state('identify_company')
 
     def on_enter_identify_company(self):
-        response = '\n'.join([
-            "Is there a specific company you are planning to apply to, and if so, what is it?"
-        ])
-        return response
+        return "Is there a specific company you are planning to apply to, and if so, what is it?"
     def respond_from_identify_company(self,message,tags):
         return self.go_to_state('save_company')
 
@@ -177,6 +183,8 @@ class OxyCSBot(ChatBot):
         return response
     def respond_from_save_company(self,message,tags):
         return self.go_to_state('unknown_faculty')
+
+
 
 
     def on_enter_unknown_faculty(self):
