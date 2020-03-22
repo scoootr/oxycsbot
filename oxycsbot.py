@@ -78,7 +78,7 @@ class OxyCSBot(ChatBot):
 
     def on_enter_introduction(self):
         self.count = 3
-        response = "Hi I am, I am here to help you work on your interviewing skills. What is your name?"
+        response = "I am here to help you work on your interviewing skills. What is your name?"
         self.name = input(str)
         return response
 
