@@ -18,8 +18,8 @@ class OxyCSBot(ChatBot):
         'save_company',
         'position',
         'transition_interview',
-        'interview_yes'
-        'interview_no'
+        'interview_yes',
+        'interview_no',
         'interview_decision',
         'start_interview',
         'weaknesses',
@@ -73,7 +73,6 @@ class OxyCSBot(ChatBot):
 
     NO = [
         'no',
-        'nope',
     ]
 
 
@@ -222,22 +221,10 @@ class OxyCSBot(ChatBot):
         return "Good morning. I’m SIA, pleased to meet you. I’ll be interviewing you today."
     def respond_from_start_interview(self,message,tags):
         return self.finish('success')
-"""
-    def on_enter_experience(self):
-        return "Do you have any work experience or extracurriculars?"
-    def respond_from_experience(self,message,tags):
-        return self.go_to_state('experience_feedback'):
 
-    def on_enter_experience_feedback(self):
-        return "When talking about your past experiences, make sure to reference specific positions and skills relevant to the position you are applying for. However, be honest with your answer. Any experience counts! If you have little to no paid work experience, include some valuable extracurriculars. "
-    def return_from_experience_feedback(self,message,tags):
-        return self.go_to_state('unknown_faculty')
-"""
     def on_enter_unknown_faculty(self):
         """Send a message when entering the "unknown_faculty" state."""
         return "Who's office hours are you looking for?"
-
-
 
     def respond_from_unknown_faculty(self, message, tags):
         """Decide what state to go to from the "unknown_faculty" state.
