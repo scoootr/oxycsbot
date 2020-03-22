@@ -12,6 +12,7 @@ class OxyCSBot(ChatBot):
         'specific_faculty',
         'unknown_faculty',
         'unrecognized_faculty',
+        'introduction',
     ]
 
     TAGS = {
@@ -19,6 +20,7 @@ class OxyCSBot(ChatBot):
         'office hours': 'office-hours',
         'OH': 'office-hours',
         'help': 'office-hours',
+
 
         # professors
         'kathryn': 'kathryn',
@@ -109,7 +111,7 @@ class OxyCSBot(ChatBot):
                 if professor in tags:
                     self.professor = professor
                     return self.go_to_state('specific_faculty')
-            return self.go_to_state('unknown_faculty')
+            return self.go_to_state('introduction')
         elif 'thanks' in tags:
             return self.finish('thanks')
         else:
@@ -139,6 +141,11 @@ class OxyCSBot(ChatBot):
             return self.finish('location')
 
     # "unknown_faculty" state functions
+    def on_enter_introduction(self):
+        return "I am here to help you work on your interviewing skills. What is your name?"
+
+    def respond_from_introduction(self,message,tags):
+        return self.go_to_state('unknown_faculty')
 
     def on_enter_unknown_faculty(self):
         """Send a message when entering the "unknown_faculty" state."""
