@@ -31,10 +31,12 @@ class OxyCSBot(ChatBot):
 
     TAGS = {
         # intent
-        'hello':'hello',
-        'hey':'hello',
-        'hi':'hello',
+        'hello': 'hello',
+        'hey': 'hello',
+        'hi': 'hello',
         'interview': 'interview',
+        'Yes':'transition_interview',
+        'Sure':'transition_interview',
 
 
         # generic
@@ -44,10 +46,10 @@ class OxyCSBot(ChatBot):
         'yes': 'yes',
         'yep': 'yes',
         'alright': 'yes',
-        'I do' : 'yes',
+        'I do': 'yes',
         'no': 'no',
         'nope': 'no',
-        "I don't" : 'no'
+        "I don't": 'no'
     }
 
     PROFESSORS = [
@@ -145,10 +147,12 @@ class OxyCSBot(ChatBot):
                 "Great, let’s begin! Remember, you should treat this as if it was a “real” interview,",
                 " so be purposeful with your words. I’ll be right back, I’m gonna change into my suit and tie!"
                 ])
+            return response
         elif 'no' in tags:
             response = '\n'.join([
                 "Unfortunately, the best way for me to give you feedback would be through conversation."
             ])
+            return response
         else:
             response = '\n'.join([
                 "Sorry, could you please clarify."
