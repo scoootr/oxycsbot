@@ -18,6 +18,8 @@ class OxyCSBot(ChatBot):
         'save_company',
         'position',
         'transition_interview',
+        'interview_yes'
+        'interview_no'
         'interview_decision',
         'start_interview',
         'weaknesses',
@@ -63,6 +65,19 @@ class OxyCSBot(ChatBot):
         'no': 'no',
         'nope': 'no',
     }
+
+    YES = [
+        'yes',
+        'yep',
+        'I do',
+        'alright',
+    ]
+
+    NO = [
+        'no',
+        'nope'
+    ]
+
 
     PROFESSORS = [
         'celia',
@@ -188,11 +203,23 @@ class OxyCSBot(ChatBot):
         return "Would you like to start a casual mock interview? It would only take around five minutes. I’ll ask you some of the most common interview questions and give you a few pointers in parenthesis along the way."
 
     def respond_from_transition_interview(self,message,tags):
-        for note in self.TAGS:
+        for note in self.YES:
             if note in tags:
                 self.note = note
                 return self.finish('success')
         return self.finish('fail')
+
+    def on_enter_interview_yes(self):
+        return "Great, let’s begin! Remember, you should treat this as if it was a “real” interview, so be purposeful with your words. I’ll be right back, I’m gonna change into my suit and tie!"
+    def respond_from_interview_yes(self, message, tags):
+        return self.go_to_state('unknown_faculty')
+
+    def on_enter_interview_no(self):
+        return "Unfortunately, the best way for me to give you feedback would be through conversation."
+    def respond_from_interview_no(self):
+        return self.finish('fail')
+
+
 
 
     def on_enter_unknown_faculty(self):
