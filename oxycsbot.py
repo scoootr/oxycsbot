@@ -83,6 +83,9 @@ class OxyCSBot(ChatBot):
         ])
         return response
 
+    def respond_from_hello(self, message, tags):
+        return self.go_to_state('introduction')
+
     def on_enter_introduction(self):
         self.count = 3
         response = '\n'.join([
