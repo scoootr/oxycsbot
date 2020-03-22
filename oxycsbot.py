@@ -173,16 +173,12 @@ class OxyCSBot(ChatBot):
         return self.go_to_state('save_company')
 
     def on_enter_save_company(self):
-        if 'yes' in tags:
-            # assign self.company to inputted company name
-            response = "Great! What position are you applying for?"
-        elif 'no' in tags:
-            response = "No problem! How about a specific position?"
-        else:
-            response = "Okay"
+        response = "yes"
         return response
+
     def respond_from_save_company(self,message,tags):
         return self.go_to_state('unknown_faculty')
+        
 
     def on_enter_unknown_faculty(self):
         """Send a message when entering the "unknown_faculty" state."""
