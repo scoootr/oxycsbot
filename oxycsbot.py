@@ -32,6 +32,14 @@ class OxyCSBot(ChatBot):
         'office hours': 'office-hours',
         'OH': 'office-hours',
         'help': 'office-hours',
+        'hello': 'hello',
+        'hey': 'hello',
+        'hi': 'hello',
+        'cool': 'introduction',
+        'awesome': 'introduction',
+        'interview': 'interview',
+        'Yes':'transition_interview',
+        'Sure':'transition_interview',
 
 
         # professors
@@ -118,11 +126,7 @@ class OxyCSBot(ChatBot):
             str: The message to send to the user.
         """
         self.professor = None
-        if 'office-hours' in tags:
-            for professor in self.PROFESSORS:
-                if professor in tags:
-                    self.professor = professor
-                    return self.go_to_state('specific_faculty')
+        if 'hello' in tags:
             return self.go_to_state('introduction')
         elif 'thanks' in tags:
             return self.finish('thanks')
