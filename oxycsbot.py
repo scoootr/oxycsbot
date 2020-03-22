@@ -188,11 +188,11 @@ class OxyCSBot(ChatBot):
         return "Would you like to start a casual mock interview? It would only take around five minutes. I’ll ask you some of the most common interview questions and give you a few pointers in parenthesis along the way."
 
     def respond_from_transition_interview(self,message,tags):
-            for professor in self.PROFESSORS:
-                if professor in tags:
-                    self.professor = professor
-                    return self.go_to_state('specific_faculty')
-            return self.go_to_state('unrecognized_faculty')
+        for note in self.TAGS:
+            if note in tags:
+                self.note = note
+                return self.finish('success')
+        return self.finish('fail')
 
 
     def on_enter_unknown_faculty(self):
@@ -209,11 +209,11 @@ class OxyCSBot(ChatBot):
         Returns:
             str: The message to send to the user.
         """
-        for note in self.TAGS:
-            if note in tags:
-                self.note = note
-                return self.finish('success')
-        return self.finish('fail')
+        for professor in self.PROFESSORS:
+            if professor in tags:
+                self.professor = professor
+                return self.go_to_state('specific_faculty')
+        return self.go_to_state('unrecognized_faculty')
 
 
 
