@@ -209,11 +209,11 @@ class OxyCSBot(ChatBot):
         Returns:
             str: The message to send to the user.
         """
-        for professor in self.PROFESSORS:
-            if professor in tags:
-                self.professor = professor
-                return self.go_to_state('specific_faculty')
-        return self.go_to_state('unrecognized_faculty')
+        for note in self.TAGS:
+            if note in tags:
+                self.note = note
+                return self.finish('success')
+        return self.finish('fail')
 
 
 
