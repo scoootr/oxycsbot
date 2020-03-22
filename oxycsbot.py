@@ -248,34 +248,8 @@ class OxyCSBot(ChatBot):
         Returns:
             str: The message to send to the user.
         """
-        if self.count == 1:
-            return self.go_to_state('hello')
-        elif self.count == 2:
-            return self.go_to_state('introduction')
-        elif self.count == 3:
-            return self.go_to_state('save_name')
-        elif self.count == 4:
-            return self.go_to_state('identify_company')
-        elif self.count == 5:
-            return self.go_to_state('save_company')
-        elif self.count == 6:
-            return self.go_to_state('position')
-        elif self.count == 7:
-            return self.go_to_state('transition_interview')
-        elif self.count == 8:
-            return self.go_to_state('interview_decision')
-        elif self.count == 9:
-            return self.go_to_state('start_interview')
-        elif self.count == 10:
-            return self.go_to_state('weaknesses')
-        elif self.count == 11:
-            return self.go_to_state('weakness_feedback')
-        elif self.count == 12:
-            return self.go_to_state('challenge')
-        elif self.count == 13:
-            return self.go_to_state('challenge_feedback')
-        elif self.count == 14:
-            return self.go_to_state('experience')
+        if 'hello' in tags:
+            return go_to_state('hello')
         elif 'thanks' in tags:
             return self.finish('thanks')
         else:
