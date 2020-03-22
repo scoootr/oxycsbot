@@ -249,7 +249,7 @@ class OxyCSBot(ChatBot):
             str: The message to send to the user.
         """
         if 'hello' in tags:
-            return go_to_state('hello')
+            return self.go_to_state('hello')
         elif 'thanks' in tags:
             return self.finish('thanks')
         else:
