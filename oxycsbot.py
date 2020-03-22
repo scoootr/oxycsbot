@@ -177,7 +177,7 @@ class OxyCSBot(ChatBot):
 
     def respond_from_save_company(self,message,tags):
         return self.go_to_state('unknown_faculty')
-
+"""
     def on_enter_position(self):
         return "Okay thanks for letting me know."
 
@@ -188,7 +188,7 @@ class OxyCSBot(ChatBot):
         return "Would you like to start a casual mock interview? It would only take around five minutes. I’ll ask you some of the most common interview questions and give you a few pointers in parenthesis along the way."
     def respond_from_transition_interview(self,message,tags):
         return self.go_to_state("unknown_faculty")
-"""
+
     def respond_from_transition_interview(self,message,tags):
         return self.go_to_state('interview_decision')
 
