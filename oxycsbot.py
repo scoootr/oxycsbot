@@ -184,6 +184,17 @@ class OxyCSBot(ChatBot):
     def respond_from_position(self, message, tags):
         return self.go_to_state('unknown_faculty')
 
+    def on_enter_transition_interview(self):
+        return "Would you like to start a casual mock interview? It would only take around five minutes. I’ll ask you some of the most common interview questions and give you a few pointers in parenthesis along the way."
+
+    def respond_from_transition_in(self,message,tags):
+            for tag in self.TAGS:
+                if tag in tags:
+                    self.professor = professor
+                    return self.finish('fail')
+            return self.go_to_state('unrecognized_faculty')
+
+
     def on_enter_unknown_faculty(self):
         """Send a message when entering the "unknown_faculty" state."""
         return "Who's office hours are you looking for?"
