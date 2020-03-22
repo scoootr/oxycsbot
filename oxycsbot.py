@@ -77,11 +77,7 @@ class OxyCSBot(ChatBot):
 
     #SIA STATES
     def on_enter_hello(self):
-        self.count = 2
-        response = '\n'.join([
-        "Hello, I'm SIA, a student interview assistant. I am here to help you work on your interviewing skills. What is your name?"
-        ])
-        return response
+        return "hello"
 
     def respond_from_hello(self, message, tags):
         return self.go_to_state('introduction')
