@@ -206,8 +206,8 @@ class OxyCSBot(ChatBot):
         for note in self.YES:
             if note in tags:
                 self.note = note
-                return self.finish('success')
-        return self.finish('fail')
+                return self.finish('interview_yes')
+        return self.finish('interview_no')
 
     def on_enter_interview_yes(self):
         return "Great, let’s begin! Remember, you should treat this as if it was a “real” interview, so be purposeful with your words. I’ll be right back, I’m gonna change into my suit and tie!"
