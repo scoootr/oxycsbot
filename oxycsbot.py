@@ -216,8 +216,12 @@ class OxyCSBot(ChatBot):
 
     def on_enter_interview_no(self):
         return "Unfortunately, the best way for me to give you feedback would be through conversation."
-    def respond_from_interview_no(self):
+    def respond_from_interview_no(self,message,tags):
         return self.finish('fail')
+
+    def on_enter_start_interview(self):
+        return "Good morning. I’m SIA, pleased to meet you. I’ll be interviewing you today."
+    def respond_from_start_interview(self)
 
 
 
