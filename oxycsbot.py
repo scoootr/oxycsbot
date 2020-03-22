@@ -238,6 +238,10 @@ class OxyCSBot(ChatBot):
     def respond_from_challenge(self,message,tags):
         return self.go_to_state('unknown_faculty')
 
+    def on_enter_challenge_feedback(self):
+        return "(One important thing to remember about this question is that you want to make sure that this challenge adds to your sense of person or adds to the interviewer’s perception of you. What does your experience with this challenge and how you overcame it tell the interviewer about you?)"
+    def respond_from_challenge_feedback(self,message,tags):
+        return self.go_to_state('unknown_faculty')
 
     def on_enter_unknown_faculty(self):
         """Send a message when entering the "unknown_faculty" state."""
@@ -299,7 +303,7 @@ class OxyCSBot(ChatBot):
 
     def finish_fail(self):
         """Send a message and go to the default state."""
-        return "If you ever change your mind, feel free to visit me again!"
+        return "I've tried my best but I still don't understand. Maybe try asking other students?"
 
     def finish_thanks(self):
         """Send a message and go to the default state."""
