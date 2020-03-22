@@ -80,6 +80,7 @@ class OxyCSBot(ChatBot):
 
 
     PROFESSORS = [
+        'yes'
         'celia',
         'hsing-hau',
         'jeff',
@@ -203,11 +204,11 @@ class OxyCSBot(ChatBot):
         return "Would you like to start a casual mock interview? It would only take around five minutes. I’ll ask you some of the most common interview questions and give you a few pointers in parenthesis along the way."
 
     def respond_from_transition_interview(self,message,tags):
-        for note in self.YES:
-            if note in tags:
-                self.note = note
-                return self.finish('interview_yes')
-        return self.finish('interview_no')
+        for professor in self.PROFESSORS:
+            if professor in tags:
+                self.professor = professor
+                return self.go_to_state('interview_yes')
+        return self.go_to_state('interview_no')
 
     def on_enter_interview_yes(self):
         return "Great, let’s begin! Remember, you should treat this as if it was a “real” interview, so be purposeful with your words. I’ll be right back, I’m gonna change into my suit and tie!"
