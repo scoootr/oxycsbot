@@ -90,8 +90,7 @@ class OxyCSBot(ChatBot):
 
     def on_enter_introduction(self):
         self.count = 3
-        response = "Hi I am, I am here to help you work on your interviewing skills. What is your name?"
-        return response
+        return "Hi I am, I am here to help you work on your interviewing skills. What is your name?"
 
     def on_enter_save_name(self):
         self.count = 4
