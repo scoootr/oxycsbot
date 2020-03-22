@@ -176,7 +176,7 @@ class OxyCSBot(ChatBot):
         return self.go_to_state('save_name')
 
     def on_enter_save_name(self):
-        return "I am look forward to helping you work on your interview skills."
+        return "I look forward to working with you."
     def respond_from_save_name(self,message,tags):
         return self.go_to_state('identify_company')
 
