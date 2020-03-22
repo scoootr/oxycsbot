@@ -78,7 +78,10 @@ class OxyCSBot(ChatBot):
     #SIA STATES
     def on_enter_hello(self):
         self.count = 2
-        return "Hello, I'm SIA, a student interview assistant."
+        response = '\n'.join([
+        "Hello, I'm SIA, a student interview assistant. I am here to help you work on your interviewing skills. What is your name?"
+        ])
+        return response
 
     def on_enter_introduction(self):
         self.count = 3
@@ -87,6 +90,8 @@ class OxyCSBot(ChatBot):
         ])
         #self.name = input(str)
         return response
+
+
 """ the syntax isn't quite right here
     def on_enter_save_name(self):
         self.count = 4
