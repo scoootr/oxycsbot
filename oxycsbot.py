@@ -182,7 +182,7 @@ class OxyCSBot(ChatBot):
         return "Wow, that sounds like an amazing opportunity!"
 
     def respond_from_position(self, message, tags):
-        return self.go_to_state('unknown_faculty')
+        return self.go_to_state('transition_interview')
 
     def on_enter_transition_interview(self):
         return "Would you like to start a casual mock interview? It would only take around five minutes. I’ll ask you some of the most common interview questions and give you a few pointers in parenthesis along the way."
