@@ -173,12 +173,12 @@ class OxyCSBot(ChatBot):
         return self.go_to_state('save_company')
 
     def on_enter_save_company(self):
-        response = "yes"
-        return response
+        self.response = "yes"
+        return self.response
 
     def respond_from_save_company(self,message,tags):
         return self.go_to_state('unknown_faculty')
-        
+
 
     def on_enter_unknown_faculty(self):
         """Send a message when entering the "unknown_faculty" state."""
