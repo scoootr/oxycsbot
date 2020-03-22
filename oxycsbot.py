@@ -226,12 +226,8 @@ class OxyCSBot(ChatBot):
     def on_enter_experience(self):
         return "Do you have any work experience or extracurriculars?"
     def respond_from_experience(self,message,tags):
-        return self.go_to_state('challenge')
+        return self.go_to_state('unknown_faculty')
 
-    def on_enter_challenge(self):
-        return "Describe a time you were struggling with a challenge. How did you overcome it and what did you learn?"
-    def respond_from_challenge(self,message,tags):
-        return self.go_to_state('unknown_faculty'):
 
     def on_enter_unknown_faculty(self):
         """Send a message when entering the "unknown_faculty" state."""
