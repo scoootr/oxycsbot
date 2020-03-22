@@ -179,12 +179,7 @@ class OxyCSBot(ChatBot):
         return self.go_to_state('position')
 
     def on_enter_position(self):
-        if 'yes' in self.TAGS:
-            return "Wow, that sounds like an amazing opportunity!"
-        elif 'no' in self.TAGS:
-            return "Don't worry that's fine! I'll still prepare you for whatever comes your way."
-        else:
-            return "Okay thanks for letting me know.""
+        return "Wow, that sounds like an amazing opportunity!"
 
     def respond_from_position(self, message, tags):
         return self.go_to_state('unknown_faculty')
