@@ -176,7 +176,7 @@ class OxyCSBot(ChatBot):
         return "Great! What position are you applying for?"
 
     def respond_from_save_company(self,message,tags):
-        return self.go_to_state('unknown_faculty')
+        return self.go_to_state('position')
 
     def on_enter_position(self):
         if 'yes' in self.TAGS:
