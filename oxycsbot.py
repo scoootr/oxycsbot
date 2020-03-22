@@ -226,7 +226,7 @@ class OxyCSBot(ChatBot):
     def on_enter_experience(self):
         return "Do you have any work experience or extracurriculars?"
     def respond_from_experience(self,message,tags):
-        return self.go_to_state('unknown_faculty')
+        return self.go_to_state('challenge')
 
     def on_enter_challenge(self):
         return "Describe a time you were struggling with a challenge. How did you overcome it and what did you learn?"
@@ -236,6 +236,11 @@ class OxyCSBot(ChatBot):
     def on_enter_challenge(self):
         return "(One important thing to remember about this question is that you want to make sure that this challenge adds to your sense of person or adds to the interviewer’s perception of you. What does your experience with this challenge and how you overcame it tell the interviewer about you?)"
     def respond_from_challenge_feedback(self,message,tags):
+        return self.go_to_state('unknown_faculty')
+
+    def on_enter_weaknesses(self):
+        return "What is a weakness that you have?"
+    def respond_from_weakness(self,message,tags):
         return self.go_to_state('unknown_faculty')
 
     def on_enter_unknown_faculty(self):
