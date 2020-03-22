@@ -13,6 +13,7 @@ class OxyCSBot(ChatBot):
         'unknown_faculty',
         'unrecognized_faculty',
         'introduction',
+        'save_name',
     ]
 
     TAGS = {
@@ -145,7 +146,12 @@ class OxyCSBot(ChatBot):
         return "I am here to help you work on your interviewing skills. What is your name?"
 
     def respond_from_introduction(self,message,tags):
-        return self.go_to_state('unknown_faculty')
+        return self.go_to_state('save_name')
+
+    def on_enter_save_name(self):
+        return "Hi, I am looking forward to helping you work on your interview skills.",
+    def respond_from_save_name(self,message,tags):
+        return go_to_state('unknown_faculty')
 
     def on_enter_unknown_faculty(self):
         """Send a message when entering the "unknown_faculty" state."""
