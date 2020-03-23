@@ -292,24 +292,6 @@ class OxyCSBot(ChatBot):
         return self.finish('success')
 
 
-    def on_enter_unknown_faculty(self):
-        """Send a message when entering the "unknown_faculty" state."""
-        return "Who's office hours are you looking for?"
-
-    def respond_from_unknown_faculty(self, message, tags):
-        """Decide what state to go to from the "unknown_faculty" state.
-        Parameters:
-            message (str): The incoming message.
-            tags (Mapping[str, int]): A count of the tags that apply to the message.
-        Returns:
-            str: The message to send to the user.
-        """
-        for professor in self.PROFESSORS:
-            if professor in tags:
-                self.professor = professor
-                return self.go_to_state('specific_faculty')
-        return self.go_to_state('unrecognized_faculty')
-
 
     # "unrecognized_faculty" state functions
 
