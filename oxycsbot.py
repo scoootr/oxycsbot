@@ -230,7 +230,7 @@ class OxyCSBot(ChatBot):
     def on_enter_experience_feedback(self):
         return "(When talking about your past experiences, make sure to reference specific positions and skills relevant to the position you are applying for. However, be honest with your answer. Any experience counts! If you have little to no paid work experience, include some valuable extracurriculars.)"
     def respond_from_experience_feedback(self,message,tags):
-        return self.go_to_state('weakness')
+        return self.go_to_state('weaknesses')
 
     def on_enter_weaknesses(self):
         return "What is a weakness that you have?"
@@ -289,9 +289,6 @@ class OxyCSBot(ChatBot):
     def finish_confused(self):
         """Send a message and go to the default state."""
         return "I'm sorry, I don't quite understand."
-    def finish_success(self):
-        """Send a message and go to the default state."""
-        return 'Great, let me know if you need anything else!'
 
     def finish_fail(self):
         """Send a message and go to the default state."""
