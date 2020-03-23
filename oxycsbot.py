@@ -200,7 +200,7 @@ class OxyCSBot(ChatBot):
         return self.go_to_state('save_name')
 
     def on_enter_save_name(self):
-        return "I look forward to working with you! First, could I ask you a few questions?"
+        return "I look forward to working with you!"
     def respond_from_save_name(self,message,tags):
         return self.go_to_state('identify_company')
 
@@ -210,19 +210,19 @@ class OxyCSBot(ChatBot):
         return self.go_to_state('save_company')
 
     def on_enter_save_company(self):
-        return "Is there a specific position you are applying for?"
+        return "Great! What position are you applying for?"
 
     def respond_from_save_company(self,message,tags):
         return self.go_to_state('position')
 
     def on_enter_position(self):
-        return "Okay, great! Shall we move on?"
+        return "Wow, that sounds like an amazing opportunity!"
 
     def respond_from_position(self, message, tags):
         return self.go_to_state('transition_interview')
 
     def on_enter_transition_interview(self):
-        return "Would you like to go through a casual mock interview? It would only take around five minutes. I’ll ask you some of the most common interview questions and give you a few pointers in parenthesis along the way."
+        return "Would you like to start a casual mock interview? It would only take around five minutes. I’ll ask you some of the most common interview questions and give you a few pointers in parenthesis along the way."
 
     def respond_from_transition_interview(self,message,tags):
         for note in self.YES:
@@ -242,7 +242,7 @@ class OxyCSBot(ChatBot):
         return self.finish('fail')
 
     def on_enter_start_interview(self):
-        return "Good morning. I’m SIA, pleased to meet you. I’ll be interviewing you today. Shall we get right into it?"
+        return "Good morning. I’m SIA, pleased to meet you. I’ll be interviewing you today."
     def respond_from_start_interview(self,message,tags):
         return self.go_to_state('experience')
 
@@ -252,7 +252,7 @@ class OxyCSBot(ChatBot):
         return self.go_to_state('experience_feedback')
 
     def on_enter_experience_feedback(self):
-        return "(When talking about your past experiences, make sure to reference specific positions and skills relevant to the position you are applying for. However, be honest with your answer. Any experience counts! If you have little to no paid work experience, include some valuable extracurriculars.)"
+        return "When talking about your past experiences, make sure to reference specific positions and skills relevant to the position you are applying for. However, be honest with your answer. Any experience counts! If you have little to no paid work experience, include some valuable extracurriculars."
     def respond_from_experience_feedback(self,message,tags):
         return self.go_to_state('challenge')
 
@@ -289,43 +289,30 @@ class OxyCSBot(ChatBot):
     def on_enter_end_interview(self):
         return "We’re finally done for today! It was nice chatting with you. How did you feel about the mock interview?"
     def respond_from_end_interview(self,message,tags):
-        return self.finish('success')
+        for pos in self.POSITIVE:
+            if pos in tags:
+                self.pos = pos
+                return self.finish('positive')
+        for neg in self.NEGATIVE:
+            if neg in tags:
+                self.neg = neg
+                return self.finish('negative')
+        return self.finish('neutral')
 
-
-
-    # "unrecognized_faculty" state functions
-
-    def on_enter_unrecognized_faculty(self):
-        """Send a message when entering the "unrecognized_faculty" state."""
-        return ' '.join([
-            "I'm not sure I understand - are you looking for",
-            "Celia, Hsing-hau, Jeff, Justin, Kathryn, or Umit?",
-        ])
-
-    def respond_from_unrecognized_faculty(self, message, tags):
-        """Decide what state to go to from the "unrecognized_faculty" state.
-        Parameters:
-            message (str): The incoming message.
-            tags (Mapping[str, int]): A count of the tags that apply to the message.
-        Returns:
-            str: The message to send to the user.
-        """
-        for professor in self.PROFESSORS:
-            if professor in tags:
-                self.professor = professor
-                return self.go_to_state('specific_faculty')
-        return self.finish('fail')
 
     # "finish" functions
+    def finish_positive(self):
+        return "Awesome! Glad I could help!"
+
+    def finish_negative(self):
+        return "Trust me it wasn’t that bad. Feel free to come back for more practice! See you!"
+
+    def finish_neutral(self):
+        return "Well, it was nice talking to you! I hope you were able to gain something from this."
 
     def finish_confused(self):
         """Send a message and go to the default state."""
-        return "Sorry, I'm just a simple bot that can't understand much. You can ask me about office hours though!"
-
-    def finish_location(self):
-        """Send a message and go to the default state."""
-        return f"{self.professor.capitalize()}'s office is in {self.get_office(self.professor)}"
-
+        return "I'm sorry, I don't quite understand."
     def finish_success(self):
         """Send a message and go to the default state."""
         return 'Great, let me know if you need anything else!'
