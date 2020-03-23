@@ -24,6 +24,8 @@ class OxyCSBot(ChatBot):
         'start_interview',
         'weaknesses',
         'weakness_feedback',
+        'strength',
+        'strength_feedback'
         'challenge',
         'challenge_feedback',
         'experience',
@@ -66,6 +68,23 @@ class OxyCSBot(ChatBot):
         'yeah': 'yes',
         'no': 'no',
         'nope': 'no',
+
+        # positive
+        'confident' : 'positive',
+        'good' : 'positive',
+        'great' : 'positive',
+        'improve' : 'positive',
+        'improved' : 'positive',
+        'better' : 'positive',
+        'awesome' : 'positive',
+
+        # negative
+        'negative' : 'negative',
+        'bad' : 'negative',
+        'nervous' : 'negative',
+        'unhappy' : 'negative',
+        'dumb' : 'negative',
+
     }
 
     YES = [
@@ -74,6 +93,12 @@ class OxyCSBot(ChatBot):
 
     NO = [
         'no',
+    ]
+    POSITIVE = [
+        'positive',
+    ]
+    NEGATIVE = [
+        'negative',
     ]
 
 
@@ -249,7 +274,22 @@ class OxyCSBot(ChatBot):
     def on_enter_weakness_feedback(self):
         return "(So, this is a tough one. You want to be honest about your answer, but you also want to pick a weakness that won’t hurt your chances of getting the position that you’re going for.)"
     def respond_from_weakness_feedback(self,message,tags):
-        return self.go_to_state('unknown_faculty')
+        return self.go_to_state('strength')
+
+    def on_enter_strength(self):
+        return "What are some of your strengths?"
+    def respond_from_strength(self,message,tags):
+        return self.go_to_state('strength_feedback')
+
+    def on_enter_strength_feedback(self):
+        return "(Although all strengths are valuable, make sure that the strengths that you select are appropriate for the position you are applying to. It may help to use the job description or requirements to guide your answer for this question.)"
+    def respond_from_strength_feedback(self,message,tags):
+        return self.go_to_state('end_interview')
+
+    def on_enter_end_interview(self):
+        return "We’re finally done for today! It was nice chatting with you. How did you feel about the mock interview?"
+    def respond_from_end_interview(self,message,tags):
+        return self.finish('success')
 
 
     def on_enter_unknown_faculty(self):
