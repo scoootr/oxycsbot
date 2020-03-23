@@ -246,6 +246,11 @@ class OxyCSBot(ChatBot):
     def respond_from_weaknesses(self,message,tags):
         return self.go_to_state('unknown_faculty')
 
+    def on_enter_weakness_feedback(self):
+        return "(So, this is a tough one. You want to be honest about your answer, but you also want to pick a weakness that won’t hurt your chances of getting the position that you’re going for.)"
+    def respond_from_weakness_feedback(self,message,tags):
+        return self.go_to_state('unknown_faculty')
+
 
     def on_enter_unknown_faculty(self):
         """Send a message when entering the "unknown_faculty" state."""
