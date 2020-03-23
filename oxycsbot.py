@@ -242,7 +242,7 @@ class OxyCSBot(ChatBot):
         return self.finish('fail')
 
     def on_enter_start_interview(self):
-        return "Good morning. I’m SIA, pleased to meet you. I’ll be interviewing you today."
+        return "Good morning. I’m SIA, pleased to meet you. I’ll be interviewing you today. Shall we get right into it?"
     def respond_from_start_interview(self,message,tags):
         return self.go_to_state('experience')
 
