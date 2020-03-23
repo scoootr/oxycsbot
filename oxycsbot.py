@@ -232,7 +232,7 @@ class OxyCSBot(ChatBot):
         return self.go_to_state('challenge')
 
     def on_enter_challenge(self):
-        return "(One important thing to remember about this question is that you want to make sure that this challenge adds to your sense of person or adds to the interviewer’s perception of you. What does your experience with this challenge and how you overcame it tell the interviewer about you?)"
+        return "Describe a time you were struggling with a challenge. How did you overcome it and what did you learn?"
     def respond_from_challenge(self,message,tags):
         return self.go_to_state('unknown_faculty')
 
