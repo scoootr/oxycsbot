@@ -99,7 +99,6 @@ class OxyCSBot(ChatBot):
         'negative',
     ]
 
-
     PROFESSORS = [
         'yes',
         'celia',
