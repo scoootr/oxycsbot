@@ -26,7 +26,7 @@ class OxyCSBot(ChatBot):
         'weakness_feedback',
         'strength',
         'strength_feedback'
-        'challenge',
+        'challenges',
         'challenge_feedback',
         'experience',
         'experience_feedback',
@@ -256,9 +256,9 @@ class OxyCSBot(ChatBot):
     def respond_from_experience_feedback(self,message,tags):
         return self.go_to_state('challenge')
 
-    def on_enter_challenge(self):
+    def on_enter_challenges(self):
         return "Describe a time you were struggling with a challenge. How did you overcome it and what did you learn?"
-    def respond_from_challenge(self,message,tags):
+    def respond_from_challenges(self,message,tags):
         return self.go_to_state('challenge_feedback')
 
     def on_enter_challenge_feedback(self):
