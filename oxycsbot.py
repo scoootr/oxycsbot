@@ -26,7 +26,7 @@ class OxyCSBot(ChatBot):
         'weakness_feedback',
         'strength',
         'strength_feedback'
-        'challenges',
+        'challenge',
         'challenge_feedback',
         'experience',
         'experience_feedback',
@@ -34,9 +34,7 @@ class OxyCSBot(ChatBot):
 
     TAGS = {
         # intent
-        'office hours': 'office-hours',
-        'OH': 'office-hours',
-        'help': 'office-hours',
+        'help': 'hello',
         'hello': 'hello',
         'hey': 'hello',
         'hi': 'hello',
@@ -170,28 +168,6 @@ class OxyCSBot(ChatBot):
         elif 'thanks' in tags:
             return self.finish('thanks')
 
-    # "specific_faculty" state functions
-
-    def on_enter_specific_faculty(self):
-        """Send a message when entering the "specific_faculty" state."""
-        response = '\n'.join([
-            f"{self.professor.capitalize()}'s office hours are {self.get_office_hours(self.professor)}",
-            'Do you know where their office is?',
-        ])
-        return response
-
-    def respond_from_specific_faculty(self, message, tags):
-        """Decide what state to go to from the "specific_faculty" state.
-        Parameters:
-            message (str): The incoming message.
-            tags (Mapping[str, int]): A count of the tags that apply to the message.
-        Returns:
-            str: The message to send to the user.
-        """
-        if 'yes' in tags:
-            return self.finish('success')
-        else:
-            return self.finish('location')
 
     # "unknown_faculty" state functions
     def on_enter_introduction(self):
@@ -254,17 +230,7 @@ class OxyCSBot(ChatBot):
     def on_enter_experience_feedback(self):
         return "(When talking about your past experiences, make sure to reference specific positions and skills relevant to the position you are applying for. However, be honest with your answer. Any experience counts! If you have little to no paid work experience, include some valuable extracurriculars.)"
     def respond_from_experience_feedback(self,message,tags):
-        return self.go_to_state('challenges')
-
-    def on_enter_challenges(self):
-        return "Describe a time you were struggling with a challenge. How did you overcome it and what did you learn?"
-    def respond_from_challenges(self,message,tags):
-        return self.go_to_state('challenge_feedback')
-
-    def on_enter_challenge_feedback(self):
-        return "(One important thing to remember about this question is that you want to make sure that this challenge adds to your sense of person or adds to the interviewer’s perception of you. What does your experience with this challenge and how you overcame it tell the interviewer about you?)"
-    def respond_from_challenge_feedback(self,message,tags):
-        return self.go_to_state('weaknesses')
+        return self.go_to_state('weakness')
 
     def on_enter_weaknesses(self):
         return "What is a weakness that you have?"
@@ -284,6 +250,16 @@ class OxyCSBot(ChatBot):
     def on_enter_strength_feedback(self):
         return "(Although all strengths are valuable, make sure that the strengths that you select are appropriate for the position you are applying to. It may help to use the job description or requirements to guide your answer for this question.)"
     def respond_from_strength_feedback(self,message,tags):
+        return self.go_to_state('challenge')
+
+    def on_enter_challenge(self):
+        return "Describe a time you were struggling with a challenge. How did you overcome it and what did you learn?"
+    def respond_from_challenge(self,message,tags):
+        return self.go_to_state('challenge_feedback')
+
+    def on_enter_challenge_feedback(self):
+        return "(One important thing to remember about this question is that you want to make sure that this challenge adds to your sense of person or adds to the interviewer’s perception of you. What does your experience with this challenge and how you overcame it tell the interviewer about you?)"
+    def respond_from_challenge_feedback(self,message,tags):
         return self.go_to_state('end_interview')
 
     def on_enter_end_interview(self):
