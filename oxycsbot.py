@@ -200,7 +200,7 @@ class OxyCSBot(ChatBot):
         return self.go_to_state('save_name')
 
     def on_enter_save_name(self):
-        return "I look forward to working with you!"
+        return "I look forward to working with you! First, could I ask you a few questions?"
     def respond_from_save_name(self,message,tags):
         return self.go_to_state('identify_company')
 
@@ -210,19 +210,19 @@ class OxyCSBot(ChatBot):
         return self.go_to_state('save_company')
 
     def on_enter_save_company(self):
-        return "Great! What position are you applying for?"
+        return "Is there a specific position you are applying for?"
 
     def respond_from_save_company(self,message,tags):
         return self.go_to_state('position')
 
     def on_enter_position(self):
-        return "Wow, that sounds like an amazing opportunity!"
+        return "Okay, great! Shall we move on?"
 
     def respond_from_position(self, message, tags):
         return self.go_to_state('transition_interview')
 
     def on_enter_transition_interview(self):
-        return "Would you like to start a casual mock interview? It would only take around five minutes. I’ll ask you some of the most common interview questions and give you a few pointers in parenthesis along the way."
+        return "Would you like to go through a casual mock interview? It would only take around five minutes. I’ll ask you some of the most common interview questions and give you a few pointers in parenthesis along the way."
 
     def respond_from_transition_interview(self,message,tags):
         for note in self.YES:
@@ -242,7 +242,7 @@ class OxyCSBot(ChatBot):
         return self.finish('fail')
 
     def on_enter_start_interview(self):
-        return "Good morning. I’m SIA, pleased to meet you. I’ll be interviewing you today."
+        return "Good morning. I’m SIA, pleased to meet you. I’ll be interviewing you today. Shall we get right into it?"
     def respond_from_start_interview(self,message,tags):
         return self.go_to_state('experience')
 
@@ -252,7 +252,7 @@ class OxyCSBot(ChatBot):
         return self.go_to_state('experience_feedback')
 
     def on_enter_experience_feedback(self):
-        return "When talking about your past experiences, make sure to reference specific positions and skills relevant to the position you are applying for. However, be honest with your answer. Any experience counts! If you have little to no paid work experience, include some valuable extracurriculars."
+        return "(When talking about your past experiences, make sure to reference specific positions and skills relevant to the position you are applying for. However, be honest with your answer. Any experience counts! If you have little to no paid work experience, include some valuable extracurriculars.)"
     def respond_from_experience_feedback(self,message,tags):
         return self.go_to_state('challenge')
 
