@@ -228,18 +228,18 @@ class OxyCSBot(ChatBot):
 
     def on_enter_experience_feedback(self):
         return "When talking about your past experiences, make sure to reference specific positions and skills relevant to the position you are applying for. However, be honest with your answer. Any experience counts! If you have little to no paid work experience, include some valuable extracurriculars."
-    def respond_from_experience_feedback(self):
+    def respond_from_experience_feedback(self,message,tags):
         return self.go_to_state('challenge')
 
     def on_enter_challenge(self):
         return "Describe a time you were struggling with a challenge. How did you overcome it and what did you learn?"
     def respond_from_challenge(self,message,tags):
-        return self.go_to_state('unknown_faculty')
+        return self.go_to_state('challenge_feedback')
 
     def on_enter_challenge_feedback(self):
         return "(One important thing to remember about this question is that you want to make sure that this challenge adds to your sense of person or adds to the interviewer’s perception of you. What does your experience with this challenge and how you overcame it tell the interviewer about you?)"
     def respond_from_challenge_feedback(self,message,tags):
-        return self.go_to_state('unknown_faculty')
+        return self.go_to_state('weakness')
 
     def on_enter_weaknesses(self):
         return "What is a weakness that you have?"
