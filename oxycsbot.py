@@ -254,7 +254,7 @@ class OxyCSBot(ChatBot):
     def on_enter_experience_feedback(self):
         return "When talking about your past experiences, make sure to reference specific positions and skills relevant to the position you are applying for. However, be honest with your answer. Any experience counts! If you have little to no paid work experience, include some valuable extracurriculars."
     def respond_from_experience_feedback(self,message,tags):
-        return self.go_to_state('weaknesses')
+        return self.go_to_state('challenge')
 
     def on_enter_challenge(self):
         return "Describe a time you were struggling with a challenge. How did you overcome it and what did you learn?"
@@ -269,7 +269,7 @@ class OxyCSBot(ChatBot):
     def on_enter_weaknesses(self):
         return "What is a weakness that you have?"
     def respond_from_weaknesses(self,message,tags):
-        return self.go_to_state('unknown_faculty')
+        return self.go_to_state('weakness_feedback')
 
     def on_enter_weakness_feedback(self):
         return "(So, this is a tough one. You want to be honest about your answer, but you also want to pick a weakness that won’t hurt your chances of getting the position that you’re going for.)"
@@ -309,8 +309,6 @@ class OxyCSBot(ChatBot):
                 self.professor = professor
                 return self.go_to_state('specific_faculty')
         return self.go_to_state('unrecognized_faculty')
-
-
 
 
     # "unrecognized_faculty" state functions
