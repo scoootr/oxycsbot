@@ -239,11 +239,11 @@ class OxyCSBot(ChatBot):
     def on_enter_challenge_feedback(self):
         return "(One important thing to remember about this question is that you want to make sure that this challenge adds to your sense of person or adds to the interviewer’s perception of you. What does your experience with this challenge and how you overcame it tell the interviewer about you?)"
     def respond_from_challenge_feedback(self,message,tags):
-        return self.go_to_state('weakness')
+        return self.go_to_state('weaknesses')
 
     def on_enter_weaknesses(self):
         return "What is a weakness that you have?"
-    def respond_from_weakness(self,message,tags):
+    def respond_from_weaknesses(self,message,tags):
         return self.go_to_state('unknown_faculty')
 
 
