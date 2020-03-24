@@ -18,7 +18,7 @@ class OxyCSBot(ChatBot):
         'yes_company',
         'no_company',
         'yes_position',
-        'no_position'
+        'no_position',
         'position',
         'transition_interview',
         'interview_yes',
@@ -34,7 +34,6 @@ class OxyCSBot(ChatBot):
         'experience',
         'experience_feedback',
         'end_interview',
-        ''
     ]
 
     TAGS = {
@@ -49,19 +48,6 @@ class OxyCSBot(ChatBot):
         'Yes':'transition_interview',
         'Sure':'transition_interview',
 
-
-        # professors
-        'kathryn': 'kathryn',
-        'leonard': 'kathryn',
-        'justin': 'justin',
-        'li': 'justin',
-        'jeff': 'jeff',
-        'miller': 'jeff',
-        'celia': 'celia',
-        'hsing-hau': 'hsing-hau',
-        'umit': 'umit',
-        'yalcinalp': 'umit',
-
         # generic
         'thanks': 'thanks',
         'okay': 'success',
@@ -71,6 +57,8 @@ class OxyCSBot(ChatBot):
         'yeah': 'yes',
         'no': 'no',
         'nope': 'no',
+        "I don't know": 'no',
+        "I'm not sure": 'no',
 
         # positive
         'confident' : 'positive',
@@ -184,8 +172,8 @@ class OxyCSBot(ChatBot):
     def on_enter_identify_company(self):
         return "Is there a specific company you are planning to apply to, and if so, what is it?"
     def respond_from_identify_company(self,message,tags):
-        for note in self.YES:
-            if note in tags:
+        for comp in self.YES:
+            if comp in tags:
                 self.note = note
                 return self.go_to_state('yes_company')
         return self.go_to_state('no_company')
@@ -193,20 +181,20 @@ class OxyCSBot(ChatBot):
     def on_enter_yes_company(self):
         return  "Great! What position are you applying for?"
     def respond_from_yes_company(self,message,tags):
-        for note in self.YES:
-            if note in tags:
-                self.note = note
-                return self.go_to_state('yes_position')
-        return self.go_to_state('no_position')
+        for position in self.NO:
+            if position in tags:
+                self.position = position
+                return self.go_to_state('no_position')
+        return self.go_to_state('yes_position')
 
     def on_enter_no_company(self):
         return "That's alright! Is there a role you have in mind?"
     def respond_fom_no_company(self,message,tags):
-        for note in self.YES:
-            if note in tags:
-                self.note = note
-                return self.go_to_state('yes_position')
-        return self.go_to_state('no_position')
+        for position in self.NO:
+            if position in tags:
+                self.position = position
+                return self.go_to_state('no_position')
+        return self.go_to_state('yes_position')
 
     def on_enter_yes_position(self):
         return "Wow, that sounds like a great role!"
