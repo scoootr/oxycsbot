@@ -1,11 +1,10 @@
 #!/usr/bin/env python3
-"""A simple chatbot that directs students to office hours of CS professors."""
 
 from chatbot import ChatBot
 
 
 class OxyCSBot(ChatBot):
-    """A simple chatbot that directs students to office hours of CS professors."""
+    """A simple chatbot that gives students interview help."""
 
     STATES = [
         'waiting',
@@ -91,15 +90,6 @@ class OxyCSBot(ChatBot):
         'negative',
     ]
 
-    PROFESSORS = [
-        'yes',
-        'celia',
-        'hsing-hau',
-        'jeff',
-        'justin',
-        'kathryn',
-        'umit',
-    ]
 
     def __init__(self):
         """Initialize the OxyCSBot.
@@ -107,43 +97,9 @@ class OxyCSBot(ChatBot):
         been identified.
         """
         super().__init__(default_state='waiting')
-        self.professor = None
 
-    def get_office_hours(self, professor):
-        """Find the office hours of a professor.
-        Arguments:
-            professor (str): The professor of interest.
-        Returns:
-            str: The office hours of that professor.
-        """
-        office_hours = {
-            'celia': 'unknown',
-            'hsing-hau': 'MW 3:30-4:30pm; F 11:45am-12:45pm',
-            'jeff': 'W 4-5pm; Th 12:50-1:50pm; F 4-5pm',
-            'justin': 'T 3-4pm; W 2-3pm; F 4-5pm',
-            'kathryn': 'MF 4-5:30pm',
-            'umit': 'M 3-5pm; W 10am-noon, 3-5pm',
-        }
-        return office_hours[professor]
 
-    def get_office(self, professor):
-        """Find the office of a professor.
-        Arguments:
-            professor (str): The professor of interest.
-        Returns:
-            str: The office of that professor.
-        """
-        office = {
-            'celia': 'Swan 232',
-            'hsing-hau': 'Swan 302',
-            'jeff': 'Fowler 321',
-            'justin': 'Swan B102',
-            'kathryn': 'Swan B101',
-            'umit': 'Swan 226',
-        }
-        return office[professor]
-
-    # "waiting" state functions
+    # "waiting" state
 
     def respond_from_waiting(self, message, tags):
         """Decide what state to go to from the "waiting" state.
@@ -157,7 +113,7 @@ class OxyCSBot(ChatBot):
         if 'hello' in tags:
             return self.go_to_state('introduction')
 
-    # "unknown_faculty" state functions
+    #  state functions
     def on_enter_introduction(self):
         return "Hi, I am SIA, your student interview assistant. I am here to help you work on your interviewing skills. What is your name?"
     def respond_from_introduction(self,message,tags):
