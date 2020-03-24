@@ -25,7 +25,7 @@ class OxyCSBot(ChatBot):
         'weaknesses',
         'weakness_feedback',
         'strength',
-        'strength_feedback'
+        'strength_feedback',
         'challenge',
         'challenge_feedback',
         'experience',
@@ -172,7 +172,7 @@ class OxyCSBot(ChatBot):
     def on_enter_introduction(self):
         return "Hi, I am SIA, your student interview assistant. I am here to help you work on your interviewing skills. What is your name?"
     def respond_from_introduction(self,message,tags):
-        return self.go_to_state('save_name')
+        return self.go_to_state('strength')#temp
 
     def on_enter_save_name(self):
         return "I look forward to working with you!"
@@ -246,7 +246,7 @@ class OxyCSBot(ChatBot):
     def respond_from_strength(self,message,tags):
         return self.go_to_state('strength_feedback')
 
-    def on_enter_strength_feedback(self):
+    def on_enter_strength_feedback(self): #x
         return "(Although all strengths are valuable, make sure that the strengths that you select are appropriate for the position you are applying to. It may help to use the job description or requirements to guide your answer for this question.)"
     def respond_from_strength_feedback(self,message,tags):
         return self.go_to_state('challenge')
