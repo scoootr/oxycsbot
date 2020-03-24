@@ -184,7 +184,7 @@ class OxyCSBot(ChatBot):
 
     def on_enter_no_company(self):
         return "That's alright! Is there a role you have in mind?"
-    def respond_fom_no_company(self,message,tags):
+    def respond_from_no_company(self,message,tags):
         return self.go_to_state('yes_position')
 
     def on_enter_yes_position(self):
