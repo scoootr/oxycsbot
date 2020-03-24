@@ -164,7 +164,7 @@ class OxyCSBot(ChatBot):
         return self.go_to_state('save_name')#temp
 
     def on_enter_save_name(self):
-        return "I look forward to working with you!"
+        return "I look forward to working with you! Can I ask you a few basic questions?"
     def respond_from_save_name(self,message,tags):
         return self.go_to_state('identify_company')
 
@@ -197,12 +197,12 @@ class OxyCSBot(ChatBot):
         return self.go_to_state('yes_position')
 
     def on_enter_yes_position(self):
-        return "Wow, that sounds like a great role!"
+        return "Sounds good! Shall we move on?"
     def respond_from_yes_position(self, message, tags):
         return self.go_to_state('transition_interview')
 
     def on_enter_no_position(self):
-        return "That's alright!"
+        return "That's alright! Shall we move on?"
     def respond_from_no_position(self, message, tags):
         return self.go_to_state('transition_interview')
 
@@ -257,7 +257,7 @@ class OxyCSBot(ChatBot):
         return self.go_to_state('strength_feedback')
 
     def on_enter_strength_feedback(self): #x
-        return "(Although all strengths are valuable, make sure that the strengths that you select are appropriate for the position you are applying to. It may help to use the job description or requirements to guide your answer for this question.)"
+        return "(Although all strengths are valuable, make sure that the strengths that you select are appropriate for the position you are applying to, and also make sure to provide evidence of these strengths. It may help to use the job description or requirements to guide your answer for this question.)"
     def respond_from_strength_feedback(self,message,tags):
         return self.go_to_state('challenge')
 
@@ -301,7 +301,7 @@ class OxyCSBot(ChatBot):
 
     def finish_fail(self):
         """Send a message and go to the default state."""
-        return "I've tried my best but I still don't understand. Maybe try asking other students?"
+        return "If you ever change your mind, feel free to visit me again!"
 
     def finish_thanks(self):
         """Send a message and go to the default state."""
