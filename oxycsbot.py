@@ -30,6 +30,7 @@ class OxyCSBot(ChatBot):
         'challenge_feedback',
         'experience',
         'experience_feedback',
+        'end_interview',
     ]
 
     TAGS = {
@@ -166,7 +167,6 @@ class OxyCSBot(ChatBot):
             return self.go_to_state('introduction')
         elif 'thanks' in tags:
             return self.finish('thanks')
-
 
     # "unknown_faculty" state functions
     def on_enter_introduction(self):
