@@ -15,7 +15,10 @@ class OxyCSBot(ChatBot):
         'introduction',
         'save_name',
         'identify_company',
-        'save_company',
+        'yes_company',
+        'no_company',
+        'yes_position',
+        'no_position'
         'position',
         'transition_interview',
         'interview_yes',
@@ -31,6 +34,7 @@ class OxyCSBot(ChatBot):
         'experience',
         'experience_feedback',
         'end_interview',
+        ''
     ]
 
     TAGS = {
@@ -165,14 +169,12 @@ class OxyCSBot(ChatBot):
         self.professor = None
         if 'hello' in tags:
             return self.go_to_state('introduction')
-        elif 'thanks' in tags:
-            return self.finish('thanks')
 
     # "unknown_faculty" state functions
     def on_enter_introduction(self):
         return "Hi, I am SIA, your student interview assistant. I am here to help you work on your interviewing skills. What is your name?"
     def respond_from_introduction(self,message,tags):
-        return self.go_to_state('strength')#temp
+        return self.go_to_state('save_name')#temp
 
     def on_enter_save_name(self):
         return "I look forward to working with you!"
@@ -182,16 +184,39 @@ class OxyCSBot(ChatBot):
     def on_enter_identify_company(self):
         return "Is there a specific company you are planning to apply to, and if so, what is it?"
     def respond_from_identify_company(self,message,tags):
-        return self.go_to_state('save_company')
+        for note in self.YES:
+            if note in tags:
+                self.note = note
+                return self.go_to_state('yes_company')
+        return self.go_to_state('no_company')
 
-    def on_enter_save_company(self):
-        return "Great! What position are you applying for?"
+    def on_enter_yes_company(self):
+        return  "Great! What position are you applying for?"
+    def respond_from_yes_company(self,message,tags):
+        for note in self.YES:
+            if note in tags:
+                self.note = note
+                return self.go_to_state('yes_position')
+        return self.go_to_state('no_position')
 
-    def respond_from_save_company(self,message,tags):
-        return self.go_to_state('position')
+    def on_enter_no_company(self):
+        return "That's alright! Is there a role you have in mind?"
+    def respond_fom_no_company(self,message,tags):
+        for note in self.YES:
+            if note in tags:
+                self.note = note
+                return self.go_to_state('yes_position')
+        return self.go_to_state('no_position')
 
-    def on_enter_position(self):
-        return "Wow, that sounds like an amazing opportunity!"
+    def on_enter_yes_position(self):
+        return "Wow, that sounds like a great role!"
+    def respond_from_yes_position(self, message, tags):
+        return self.go_to_state('transition_interview')
+
+    def on_enter_no_position(self):
+        return "That's alright!"
+    def respond_from_no_position(self, message, tags):
+        return self.go_to_state('transition_interview')
 
     def respond_from_position(self, message, tags):
         return self.go_to_state('transition_interview')
