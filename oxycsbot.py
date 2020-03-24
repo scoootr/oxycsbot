@@ -180,6 +180,7 @@ class OxyCSBot(ChatBot):
     def on_enter_yes_company(self):
         return  "Great! What position are you applying for?"
     def respond_from_yes_company(self,message,tags):
+        return 'pine'
         for position1 in self.NO:
             if position1 in tags:
                 self.position1 = position1
@@ -189,6 +190,7 @@ class OxyCSBot(ChatBot):
     def on_enter_no_company(self):
         return "That's alright! Is there a role you have in mind?"
     def respond_fom_no_company(self,message,tags):
+        return "pine"
         for position2 in self.NO:
             if position2 in tags:
                 self.position2 = position2
