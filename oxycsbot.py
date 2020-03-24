@@ -19,7 +19,6 @@ class OxyCSBot(ChatBot):
         'no_company',
         'yes_position',
         'no_position',
-        'position',
         'transition_interview',
         'interview_yes',
         'interview_no',
@@ -172,7 +171,7 @@ class OxyCSBot(ChatBot):
     def on_enter_identify_company(self):
         return "Is there a specific company you are planning to apply to, and if so, what is it?"
     def respond_from_identify_company(self,message,tags):
-        for comp in self.YES:
+        for comp in self.NO:
             if comp in tags:
                 self.note = note
                 return self.go_to_state('yes_company')
@@ -204,9 +203,6 @@ class OxyCSBot(ChatBot):
     def on_enter_no_position(self):
         return "That's alright!"
     def respond_from_no_position(self, message, tags):
-        return self.go_to_state('transition_interview')
-
-    def respond_from_position(self, message, tags):
         return self.go_to_state('transition_interview')
 
     def on_enter_transition_interview(self):
